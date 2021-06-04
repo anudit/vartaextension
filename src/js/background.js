@@ -14,7 +14,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
         let url = new URL(tab.url);
         let link = url.origin + url.pathname;
         console.log(toB64(link), link);
-        chrome.tabs.create({active: true, url: `https://alpha.theconvo.space/site/${toB64(link)}`});
+        chrome.tabs.create({active: true, url: `https://theconvo.space/site/${toB64(link)}`});
 
     } catch (error) {
 
