@@ -1,0 +1,40 @@
+{
+  "name": "The Convo Space",
+  "description": "The Convo Space",
+  "version": "1.1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "action": {
+    "default_icon": "icon-128.png"
+  },
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "scripting"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "js": [
+        "contentScript.bundle.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icon-128.png"
+      ],
+      "matches": []
+    }
+  ]
+}
