@@ -7,6 +7,7 @@ var webpack = require('webpack'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   TerserPlugin = require('terser-webpack-plugin');
 
+const dotenv = require('dotenv');
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 var alias = {
@@ -99,6 +100,19 @@ var options = {
   },
   resolve: {
     alias: alias,
+    fallback: {
+      fs: false,
+      os: false,
+      net: false,
+      tls: false,
+      https: false,
+      http: false,
+      util: false,
+      assert: false,
+      process: false,
+      "stream": require.resolve("stream-browserify"),
+      "buffer": require.resolve("buffer")
+    },
     extensions: fileExtensions
       .map((extension) => '.' + extension)
       .concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
@@ -112,6 +126,9 @@ var options = {
     }),
     // expose and write the allowed env vars on the compiled bundle
     new webpack.EnvironmentPlugin(['NODE_ENV']),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(dotenv.config().parsed) // it will automatically pick up key values from .env file
+    }),
     new CopyWebpackPlugin({
       patterns: [
         {
@@ -140,6 +157,13 @@ var options = {
         },
       ],
     }),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
+
   ],
   infrastructureLogging: {
     level: 'info',

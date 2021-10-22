@@ -1,0 +1,7 @@
+.app-convo::-webkit-scrollbar {
+    display: none !important;
+}
+
+.publicTab::-webkit-scrollbar {
+    display: none !important;
+}
