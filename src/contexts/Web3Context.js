@@ -39,6 +39,29 @@ export const Web3ContextProvider = ({ children }) => {
         }
     }
 
+    async function getMetamaskProvider() {
+
+        let promise = new Promise((res, rej) => {
+
+            const metamaskPort = chrome.runtime.connect('nkbihfbeogaeaoehlefnkodbefgpgknn');
+            const pluginStream = new PortStream(metamaskPort);
+            const ethereumProvider = new MetamaskInpageProvider(pluginStream);
+            ethereumProvider['autoRefreshOnNetworkChange'] = false; // silence the warning from metamask https://docs.metamask.io/guide/ethereum-provider.html#ethereum-autorefreshonnetworkchange
+            ethereumProvider.on('connect', () => {
+                console.log('onconnect', ethereumProvider);
+                res(ethereumProvider)
+            });
+            ethereumProvider.on('disconnect', () => {
+                rej('MetaMask is unavailable.');
+            });
+        });
+
+        let result = await promise;
+        return result;
+
+
+    }
+
     async function connectWallet(choice = "") {
 
         console.log("choice", choice);
@@ -156,11 +179,8 @@ export const Web3ContextProvider = ({ children }) => {
         else if (choice === "injected") {
             try {
 
-                const metamaskPort = chrome.runtime.connect('nkbihfbeogaeaoehlefnkodbefgpgknn');
-                const pluginStream = new PortStream(metamaskPort);
-                const ethereumProvider = new MetamaskInpageProvider(pluginStream);
+                const ethereumProvider = await getMetamaskProvider();
                 console.log('ethereumProvider', ethereumProvider);
-                ethereumProvider.autoRefreshOnNetworkChange = false;
 
                 let accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
                 const ethersProvider = new ethers.providers.Web3Provider(ethereumProvider);
