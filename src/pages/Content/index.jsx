@@ -4,6 +4,7 @@ import ConvoApp from './app';
 import { ThemeProvider } from 'styled-components'
 import { Web3ContextProvider } from '../../contexts/Web3Context';
 
+
 // const customTheme = extendTheme({
 //     styles: {
 //         global: {
@@ -42,7 +43,6 @@ function App() {
 let appEle = document.createElement("div");
 appEle.id = "#app-convo"
 appEle.classList.add('app-convo')
-console.log('index', window.ethereum)
 render(<App />, window.document.body.appendChild(appEle));
 
 if (module.hot) module.hot.accept();

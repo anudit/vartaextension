@@ -4,8 +4,13 @@ import Cookies from "js-cookie";
 import { Convo } from '@theconvospace/sdk';
 import Torus from "@toruslabs/torus-embed";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { MetamaskInpageProvider } from "metamask-inpage-provider"
-import PortStream from "extension-port-stream"
+import { initializeProvider } from '@metamask/providers';
+import LocalMessageDuplexStream from 'post-message-stream';
+
+const metamaskStream = new LocalMessageDuplexStream({
+    name: 'inpage',
+    target: 'contentScript',
+});
 
 // import { checkUnstoppableDomains } from '@/lib/identity';
 
@@ -34,32 +39,9 @@ export const Web3ContextProvider = ({ children }) => {
         if (Boolean(resp[0]?.value) === true) {
             return setPrettyName(resp[0]?.value);
         }
-        else if (Boolean(resp[1]?.value) === true) {
-            return setPrettyName(resp[1]?.value);
-        }
-    }
-
-    async function getMetamaskProvider() {
-
-        let promise = new Promise((res, rej) => {
-
-            const metamaskPort = chrome.runtime.connect('nkbihfbeogaeaoehlefnkodbefgpgknn');
-            const pluginStream = new PortStream(metamaskPort);
-            const ethereumProvider = new MetamaskInpageProvider(pluginStream);
-            ethereumProvider['autoRefreshOnNetworkChange'] = false; // silence the warning from metamask https://docs.metamask.io/guide/ethereum-provider.html#ethereum-autorefreshonnetworkchange
-            ethereumProvider.on('connect', () => {
-                console.log('onconnect', ethereumProvider);
-                res(ethereumProvider)
-            });
-            ethereumProvider.on('disconnect', () => {
-                rej('MetaMask is unavailable.');
-            });
-        });
-
-        let result = await promise;
-        return result;
-
-
+        // else if (Boolean(resp[1]?.value) === true) {
+        //     return setPrettyName(resp[1]?.value);
+        // }
     }
 
     async function connectWallet(choice = "") {
@@ -178,12 +160,18 @@ export const Web3ContextProvider = ({ children }) => {
         }
         else if (choice === "injected") {
             try {
+                // this will initialize the provider and set it as window.ethereum
+                let ethereumProvider = initializeProvider({
+                    connectionStream: metamaskStream,
+                });
 
-                const ethereumProvider = await getMetamaskProvider();
-                console.log('ethereumProvider', ethereumProvider);
+                console.log('ethereumProvider', window.ethereum);
 
-                let accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
-                const ethersProvider = new ethers.providers.Web3Provider(ethereumProvider);
+                let accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                // let accounts = await window.ethereum.enable();
+
+                console.log('accounts', accounts);
+                const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
                 setProvider(ethersProvider);
 
                 // if there was a previous session, try and validate that first.
@@ -191,7 +179,7 @@ export const Web3ContextProvider = ({ children }) => {
 
                     let tokenRes = convo.auth.validate(accounts[0], cookies.get('CONVO_SESSION'));
 
-                    // if previous session is invalid then request a new auth token.
+                    // if previous session is invalid then   request a new auth token.
                     if (tokenRes['success'] === false) {
                         let token = await updateAuthToken(accounts[0], "ethereum", ethersProvider);
                         if (token !== false) {

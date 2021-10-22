@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@hot-loader/react-dom": "^17.0.1",
+    "@metamask/providers": "^8.1.1",
     "@theconvospace/sdk": "^0.1.10",
     "@toruslabs/torus-embed": "^1.13.6",
     "@types/chrome": "0.0.159",
@@ -24,9 +25,8 @@
     "buffer": "^6.0.3",
     "dotenv": "^10.0.0",
     "ethers": "^5.5.1",
-    "extension-port-stream": "^2.0.1",
     "js-cookie": "^3.0.1",
-    "metamask-inpage-provider": "^5.0.0",
+    "post-message-stream": "^3.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hot-loader": "^4.13.0",
