@@ -6,10 +6,13 @@ import Torus from "@toruslabs/torus-embed";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { initializeProvider } from '@metamask/providers';
 import LocalMessageDuplexStream from 'post-message-stream';
+import log from 'loglevel';
+
+log.setDefaultLevel('debug');
 
 const metamaskStream = new LocalMessageDuplexStream({
-    name: 'inpage',
-    target: 'contentScript',
+    name: 'metamask-inpage',
+    target: 'metamask-contentscript',
 });
 
 // import { checkUnstoppableDomains } from '@/lib/identity';
@@ -45,12 +48,21 @@ export const Web3ContextProvider = ({ children }) => {
     }
 
     async function connectWallet(choice = "") {
+        try {
 
-        console.log("choice", choice);
+            console.log("choice", choice);
 
-        if (choice === "walletconnect") {
+            window.addEventListener('ethereum#initialized', (e) => {
+                console.log('got event', e)
+            });
 
-            try {
+            let ethersProvider;
+            let accounts;
+            let isProviderSet = false;
+
+
+            if (choice === "walletconnect") {
+
                 const provider = new WalletConnectProvider({
                     infuraId: "1e7969225b2f4eefb3ae792aabf1cc17",
                     qrcodeModalOptions: {
@@ -67,59 +79,46 @@ export const Web3ContextProvider = ({ children }) => {
 
                 await provider.enable();
 
-                console.log(provider)
+                ethersProvider = new ethers.providers.Web3Provider(provider);
+                accounts = await ethersProvider.listAccounts();
+                isProviderSet = true;
 
-                const ethersProvider = new ethers.providers.Web3Provider(provider);
-                let accounts = await ethersProvider.listAccounts();
-                setProvider(ethersProvider);
-
-                // if there was a previous session, try and validate that first.
-                if (Boolean(cookies.get('CONVO_SESSION')) === true) {
-
-                    let tokenRes = convo.auth.validate(accounts[0], cookies.get('CONVO_SESSION'));
-
-                    // if previous session is invalid then request a new auth token.
-                    if (tokenRes['success'] === false) {
-                        let token = await updateAuthToken(accounts[0], "ethereum", ethersProvider);
-                        if (token !== false) {
-                            setProvider(ethersProvider);
-                            setConnectedChain("ethereum");
-                            updatePrettyName(accounts[0]);
-                            setSignerAddress(accounts[0]);
-                        }
-                    }
-                    else { // use the old valid session
-                        setProvider(ethersProvider);
-                        setConnectedChain("ethereum");
-                        updatePrettyName(accounts[0]);
-                        setSignerAddress(accounts[0]);
-                    }
-                }
-                else { // auth and store a new session.
-                    let token = await updateAuthToken(accounts[0], "ethereum", ethersProvider);
-                    if (token !== false) {
-                        setProvider(ethersProvider);
-                        setConnectedChain("ethereum");
-                        updatePrettyName(accounts[0]);
-                        setSignerAddress(accounts[0]);
-                    }
-                }
-
-            } catch (e) {
-                disconnectWallet();
-                console.log('NO_WALLET_CONNECTED', e);
             }
+            else if (choice === "torus") {
 
-        }
-        else if (choice === "torus") {
-            try {
                 const torus = new Torus();
                 await torus.init();
                 await torus.login();
 
-                const ethersProvider = new ethers.providers.Web3Provider(torus.provider);
-                let accounts = await ethersProvider.listAccounts();
-                setProvider(ethersProvider);
+                ethersProvider = new ethers.providers.Web3Provider(torus.provider);
+                accounts = await ethersProvider.listAccounts();
+                isProviderSet = true;
+            }
+            else if (choice === "injected") {
+                // this will initialize the provider and set it as window.ethereum
+                let ethereumProvider = initializeProvider({
+                    connectionStream: metamaskStream,
+                    logger: log,
+                    shouldShimWeb3: true,
+                });
+
+                console.log('ethereumProvider', window.ethereum, metamaskStream, ethereumProvider);
+
+                accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                // accounts = await window.ethereum.enable();
+
+                ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
+                console.log('ethersProvider', ethersProvider);
+                // accounts = await ethersProvider.listAccounts();
+                console.log('accounts', accounts);
+                isProviderSet = true;
+            }
+            else {
+                console.log('Invalid Choice.');
+            }
+
+
+            if (isProviderSet === true) {
 
                 // if there was a previous session, try and validate that first.
                 if (Boolean(cookies.get('CONVO_SESSION')) === true) {
@@ -152,68 +151,16 @@ export const Web3ContextProvider = ({ children }) => {
                         setSignerAddress(accounts[0]);
                     }
                 }
-
-            } catch (e) {
-                disconnectWallet();
-                console.log('NO_WALLET_CONNECTED', e);
             }
-        }
-        else if (choice === "injected") {
-            try {
-                // this will initialize the provider and set it as window.ethereum
-                let ethereumProvider = initializeProvider({
-                    connectionStream: metamaskStream,
-                });
-
-                console.log('ethereumProvider', window.ethereum);
-
-                let accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                // let accounts = await window.ethereum.enable();
-
-                console.log('accounts', accounts);
-                const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
-                setProvider(ethersProvider);
-
-                // if there was a previous session, try and validate that first.
-                if (Boolean(cookies.get('CONVO_SESSION')) === true) {
-
-                    let tokenRes = convo.auth.validate(accounts[0], cookies.get('CONVO_SESSION'));
-
-                    // if previous session is invalid then   request a new auth token.
-                    if (tokenRes['success'] === false) {
-                        let token = await updateAuthToken(accounts[0], "ethereum", ethersProvider);
-                        if (token !== false) {
-                            setProvider(ethersProvider);
-                            setConnectedChain("ethereum");
-                            updatePrettyName(accounts[0]);
-                            setSignerAddress(accounts[0]);
-                        }
-                    }
-                    else { // use the old valid session
-                        setProvider(ethersProvider);
-                        setConnectedChain("ethereum");
-                        updatePrettyName(accounts[0]);
-                        setSignerAddress(accounts[0]);
-                    }
-                }
-                else { // auth and store a new session.
-                    let token = await updateAuthToken(accounts[0], "ethereum", ethersProvider);
-                    if (token !== false) {
-                        setProvider(ethersProvider);
-                        setConnectedChain("ethereum");
-                        updatePrettyName(accounts[0]);
-                        setSignerAddress(accounts[0]);
-                    }
-                }
-
-            } catch (e) {
-                disconnectWallet();
-                console.log('NO_WALLET_CONNECTED', e);
+            else {
+                console.log('Provider not set.')
             }
+
+        } catch (e) {
+            disconnectWallet();
+            console.log('NO_WALLET_CONNECTED', e);
         }
-        else {
-            console.log('Invalid Choice.')
-        }
+
     }
 
     function disconnectWallet() {
