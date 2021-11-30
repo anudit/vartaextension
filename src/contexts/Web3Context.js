@@ -10,16 +10,23 @@ import log from 'loglevel';
 
 log.setDefaultLevel('debug');
 
-const metamaskStream = new LocalMessageDuplexStream({
-    name: 'metamask-inpage',
-    target: 'metamask-contentscript',
-});
 
 // import { checkUnstoppableDomains } from '@/lib/identity';
 
 export const Web3Context = React.createContext(undefined);
 
 export const Web3ContextProvider = ({ children }) => {
+
+    const metamaskStream = new LocalMessageDuplexStream({
+        name: 'metamask-inpage',
+        target: 'metamask-contentscript',
+    });
+    // this will initialize the provider and set it as window.ethereum
+    let ethereumProvider = initializeProvider({
+        connectionStream: metamaskStream,
+        logger: log,
+        shouldShimWeb3: true,
+    });
 
     const cookies = Cookies.withAttributes({
         path: '/'
@@ -29,6 +36,22 @@ export const Web3ContextProvider = ({ children }) => {
     const [signerAddress, setSignerAddress] = useState("");
     const [prettyName, setPrettyName] = useState("");
     const convo = new Convo('CSCpPwHnkB3niBJiUjy92YGP6xVkVZbWfK8xriDO');
+
+    useEffect(() => {
+        setTimeout(() => {
+            let sessionCookie = cookies.get('CONVO_SESSION');
+            let choiceCookie = cookies.get('CONVO_LAST_CONNECTED_CHOICE');
+            if (Boolean(sessionCookie) === true) {
+                if (Boolean(choiceCookie) === true) {
+                    try {
+                        connectWallet(choiceCookie);
+                    } catch (error) {
+                        console.log('autologin error', error);
+                    }
+                }
+            }
+        }, 3000)
+    }, []);
 
     async function updatePrettyName(address) {
         let tp = new ethers.providers.AlchemyProvider("mainnet", "A4OQ6AV7W-rqrkY9mli5-MCt-OwnIRkf");
@@ -51,10 +74,6 @@ export const Web3ContextProvider = ({ children }) => {
         try {
 
             console.log("choice", choice);
-
-            window.addEventListener('ethereum#initialized', (e) => {
-                console.log('got event', e)
-            });
 
             let ethersProvider;
             let accounts;
@@ -95,18 +114,13 @@ export const Web3ContextProvider = ({ children }) => {
                 isProviderSet = true;
             }
             else if (choice === "injected") {
-                // this will initialize the provider and set it as window.ethereum
-                let ethereumProvider = initializeProvider({
-                    connectionStream: metamaskStream,
-                    logger: log,
-                    shouldShimWeb3: true,
-                });
 
-                console.log('ethereumProvider', window.ethereum, metamaskStream, ethereumProvider);
+                console.log('ethereumProvider', window.ethereum);
+
 
                 accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 // accounts = await window.ethereum.enable();
-
+                console.log('accounts', accounts);
                 ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
                 console.log('ethersProvider', ethersProvider);
                 // accounts = await ethersProvider.listAccounts();
@@ -127,7 +141,7 @@ export const Web3ContextProvider = ({ children }) => {
 
                     // if previous session is invalid then request a new auth token.
                     if (tokenRes['success'] === false) {
-                        let token = await updateAuthToken(accounts[0], "ethereum", ethersProvider);
+                        let token = await updateAuthToken(accounts[0], "ethereum", ethersProvider, choice);
                         if (token !== false) {
                             setProvider(ethersProvider);
                             setConnectedChain("ethereum");
@@ -143,7 +157,7 @@ export const Web3ContextProvider = ({ children }) => {
                     }
                 }
                 else { // auth and store a new session.
-                    let token = await updateAuthToken(accounts[0], "ethereum", ethersProvider);
+                    let token = await updateAuthToken(accounts[0], "ethereum", ethersProvider, choice);
                     if (token !== false) {
                         setProvider(ethersProvider);
                         setConnectedChain("ethereum");
@@ -174,7 +188,7 @@ export const Web3ContextProvider = ({ children }) => {
     async function getAuthToken(manualAddress = undefined) {
 
         let authAdd = Boolean(manualAddress) === true ? manualAddress : signerAddress;
-        let tokenRes = convo.auth.validate(authAdd, cookies.get('CONVO_SESSION'));
+        let tokenRes = await convo.auth.validate(authAdd, cookies.get('CONVO_SESSION'));
 
         if (tokenRes['success'] === true) {
             return cookies.get('CONVO_SESSION');
@@ -193,7 +207,7 @@ export const Web3ContextProvider = ({ children }) => {
         }
     }
 
-    async function updateAuthToken(signerAddress, chainName, tempProvider) {
+    async function updateAuthToken(signerAddress, chainName, tempProvider, choice = "") {
 
         console.log('update auth token');
         let timestamp = Date.now();
@@ -213,6 +227,9 @@ export const Web3ContextProvider = ({ children }) => {
 
         if (res.success === true) {
             cookies.set('CONVO_SESSION', res['message'], { expires: 1, secure: true });
+            if (choice !== "") {
+                cookies.set('CONVO_LAST_CONNECTED_CHOICE', choice, { expires: 30, secure: true });
+            }
             console.log('valid session setup.')
             return res['message'];
         }
