@@ -100,6 +100,7 @@ export const Web3ContextProvider = ({ children }) => {
 
                 ethersProvider = new ethers.providers.Web3Provider(provider);
                 accounts = await ethersProvider.listAccounts();
+                console.log(accounts);
                 isProviderSet = true;
 
             }
@@ -216,16 +217,20 @@ export const Web3ContextProvider = ({ children }) => {
 
         if (chainName === "ethereum") {
 
+            console.log('sending sig')
             let signature = await tempProvider.send(
                 'personal_sign',
                 [ethers.utils.hexlify(ethers.utils.toUtf8Bytes(data)), signerAddress.toLowerCase()]
             );
+            console.log('sig', signature);
 
             res = await convo.auth.authenticate(signerAddress, signature, timestamp, "ethereum");
 
         }
 
-        if (res.success === true) {
+        console.log('res', res);
+
+        if (res?.success === true) {
             cookies.set('CONVO_SESSION', res['message'], { expires: 1, secure: true });
             if (choice !== "") {
                 cookies.set('CONVO_LAST_CONNECTED_CHOICE', choice, { expires: 30, secure: true });

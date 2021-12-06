@@ -88,8 +88,9 @@ function PublicTab({ setTabIndex }) {
         let snapshot = await convo.comments.query({
             url: encodeURIComponent(url),
             threadId,
-        })
-        setComments(snapshot);
+            latestFirst: true
+        });
+        setComments(snapshot.reverse());
 
         let commentsBox = document.getElementById('commentsBox');
         if (Boolean(commentsBox) === true) {
@@ -98,16 +99,17 @@ function PublicTab({ setTabIndex }) {
         }
     }, []);
 
+    async function scrollDown() {
+        let commentsBox = document.getElementById('commentsBox');
+        if (Boolean(commentsBox) === true) {
+            const scroll = commentsBox.scrollHeight - commentsBox.clientHeight;
+            commentsBox.scrollTo(0, scroll);
+            console.log('scrolled');
+        }
+    }
 
     useEffect(async () => {
-        setTimeout(() => {
-            let commentsBox = document.getElementById('commentsBox');
-            if (Boolean(commentsBox) === true) {
-                const scroll = commentsBox.scrollHeight - commentsBox.clientHeight;
-                commentsBox.scrollTo(0, scroll);
-                console.log('scrolled');
-            }
-        }, 1000)
+        setTimeout(scrollDown, 2000)
     }, [comments]);
 
 

@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Flex } from '../../components/Base';
 import '../../styles/react-tabs.css';
 import '../../styles/app.css';
-import { ContactsIcon, GlobeIcon, PersonalIcon, LoginIcon, ProfileIcon, DownArrowIcon } from '../../components/Icons';
+import { ContactsIcon, GlobeIcon, PersonalIcon, LoginIcon, ProfileIcon, DownArrowIcon, ConvoIcon } from '../../components/Icons';
 import Contacts from './sections/contacts';
 import Personal from './sections/personal';
 import Public from './sections/public';
@@ -19,6 +19,8 @@ const ScrollButton = styled.button`
     justify-content: center;
     height: 50px;
     width: 50px;
+    background-color: transparent;
+    border: none;
 `;
 
 function App() {
@@ -36,6 +38,16 @@ function App() {
             console.log('scrolled');
         }
     }
+
+    async function bindOpenWindow(e) {
+        if (e.keyCode == 67 && e.altKey) {
+            setIsOpen((current) => !current);
+        };
+    }
+
+    useEffect(() => {
+        document.onkeydown = bindOpenWindow;
+    }, [])
 
     return (
         <>
@@ -63,9 +75,9 @@ function App() {
                         <TabPanel display="flex">
                             <Personal />
                         </TabPanel>
-                        <TabPanel display="flex">
+                        {/* <TabPanel display="flex">
                             <Contacts />
-                        </TabPanel>
+                        </TabPanel> */}
                         <TabPanel display="flex">
                             <Login />
                         </TabPanel>
@@ -79,9 +91,9 @@ function App() {
                                 <Tab>
                                     <PersonalIcon />
                                 </Tab>
-                                <Tab>
+                                {/* <Tab>
                                     <ContactsIcon />
-                                </Tab>
+                                </Tab> */}
                                 <Tab>
                                     {signerAddress === "" ? <LoginIcon /> : <ProfileIcon />}
                                 </Tab>
@@ -92,20 +104,14 @@ function App() {
                                 <DownArrowIcon />
                             </ScrollButton>
                             <Button border="none" backgroundColor="#ffffff70" onClick={() => { setIsOpen(!isOpen) }} borderRadius="100px" height="50px" width="50px" padding={1}>
-                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1000 1000" height="40px" width="40px">
-                                    <path fill="#010101" d="M461 500l234 226a326 326 0 11-8-461L461 500z" />
-                                    <circle fill="#010101" cx="762.4" cy="500" r="137.2" />
-                                </svg>
+                                <ConvoIcon />
                             </Button>
                         </Flex>
                     </Flex>
                 </Tabs>
             </Flex>
             <Button display={isOpen === true ? "none" : "flex"} border="none" backgroundColor="#288ac3de" zIndex="1000000" position="fixed" onClick={() => { setIsOpen(!isOpen) }} borderRadius="100px" right="20px" bottom="20px" height="50px" width="50px" padding={1}>
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1000 1000" height="40px" width="40px">
-                    <path fill="#010101" d="M461 500l234 226a326 326 0 11-8-461L461 500z" />
-                    <circle fill="#010101" cx="762.4" cy="500" r="137.2" />
-                </svg>
+                <ConvoIcon />
             </Button>
         </>
     )

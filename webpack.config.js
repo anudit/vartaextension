@@ -110,6 +110,8 @@ var options = {
       util: false,
       assert: false,
       process: false,
+      browser: false,
+      "crypto": require.resolve("crypto-browserify"),
       "stream": require.resolve("stream-browserify"),
       "buffer": require.resolve("buffer")
     },

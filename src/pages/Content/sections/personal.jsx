@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Button, Flex } from '../../../components/Base';
+import { AddIcon, ReloadIcon } from '../../../components/Icons';
+import ThreadView from '../../../components/ThreadView';
 import TabShell from '../../../components/TabShell';
 import { Web3Context } from '../../../contexts/Web3Context';
 
@@ -13,22 +15,26 @@ const Input = styled.input`
 `;
 
 const IconButton = styled.button`
-    min-width: 50px !important;
-    height: 50px !important;
+    width: ${props => (props.size === "sm" ? "54" : "50")}px !important;
+    height: ${props => (props.size === "sm" ? "40" : "50")}px !important;
     display:flex;
     align-items: center;
     justify-content: center;
-    background: #ffffff70;
+    background: transparent;
     border-radius: 100px;
     border:none;
-    padding:8px;
+    padding: ${props => (props.size === "sm" ? "4" : "8")}px !important;
 `;
 
-function Contacts() {
+function Personal() {
 
     const { signerAddress, convo, getAuthToken } = useContext(Web3Context);
     let [threads, setThreads] = useState(null);
     const [activeScreen, setActiveScreen] = useState('home');
+    const [screenData, setscreenData] = useState({});
+    const [searchString, setSearchString] = useState("");
+
+    const searchInput = useRef();
     const inputTitleRef = useRef();
     const inputDescriptionRef = useRef();
     const inputMembersRef = useRef();
@@ -42,9 +48,12 @@ function Contacts() {
     }, [])
 
     async function refreshThreads() {
-        let threadsData = await convo.threads.query({ member: signerAddress });
+        let threadsData = await convo.threads.getUserThreads(signerAddress);
         if (threadsData?.success === true) {
-            setThreads(threadsData);
+            console.log(threadsData.member.toString());
+            let threads = await convo.threads.getThreads(threadsData.member.toString());
+            console.log(threads.threads);
+            setThreads(threads.threads);
         }
         else {
             setThreads([]);
@@ -89,40 +98,74 @@ function Contacts() {
         return (
             <TabShell>
                 <Flex display="flex" flexDirection="row">
-                    <Input width="100%" />
-                    <IconButton onClick={() => { setActiveScreen('create') }} > +</IconButton>
-                    <IconButton onClick={() => { refreshThreads() }} > r</IconButton>
+                    <Input width="100%" ref={searchInput} onChange={() => {
+                        setSearchString(searchInput.current.value);
+                    }} />
+                    <IconButton onClick={() => { setActiveScreen('create') }} size="sm">
+                        <AddIcon />
+                    </IconButton>
+                    <IconButton onClick={() => { refreshThreads() }} size="sm">
+                        <ReloadIcon />
+                    </IconButton>
                 </Flex>
-                <ul>
+                {
+                    Boolean(threads) === false && (
+                        <p>loading...</p>
+                    )
+                }
+                {
+                    Boolean(threads) === true && threads.length <= 0 && (
+                        <p>No threads.</p>
+                    )
+                }
+                <Flex display="flex" flexDirection="column">
                     {
-                        Boolean(threads) === false && (
-                            <li>loading...</li>
-                        )
-                    }
-                    {
-                        Boolean(threads) === true && threads.length <= 0 && (
-                            <li>No threads.</li>
-                        )
-                    }
-                    {
-                        Boolean(threads) === true && threads.length > 0 && threads.map(thread => {
+                        Boolean(threads) === true && threads.length > 0 && threads.map(t => {
                             return (
-                                <li>{thread.title}</li>
+                                <Flex
+                                    display={t.title.toLowerCase().includes(searchString.toLowerCase()) === true ? "flex" : "none"}
+                                    key={t._id}
+                                    textAlign="left"
+                                    paddingTop="5px"
+                                    paddingBottom="5px"
+                                    paddingRight="10px"
+                                    paddingLeft="10px"
+                                    marginTop="5px"
+                                    marginBottom="5px"
+                                    marginRight="5px"
+                                    marginLeft="5px"
+                                    backgroundColor="#ffffff42"
+                                    borderRadius="10px"
+                                    cursor="pointer"
+                                    onClick={() => {
+                                        setActiveScreen('viewThread');
+                                        setscreenData(t);
+                                    }}
+                                >
+                                    {decodeURIComponent(t.title)}
+                                </Flex>
                             )
                         })
                     }
-                </ul>
+                </Flex>
             </TabShell>
         );
 
     }
-    else if (activeScreen === 'create') {
-
+    else if (activeScreen === 'viewThread') {
         return (
             <TabShell>
                 <Flex display="flex" flexDirection="row">
                     <p onClick={() => { setActiveScreen('home') }}>Back</p>
                 </Flex>
+                <ThreadView screenData={screenData} />
+            </TabShell>
+        )
+    }
+    else if (activeScreen === 'create') {
+
+        return (
+            <TabShell>
 
                 title
                 <Input width="100%" defaultValue="Title" ref={inputTitleRef} />
@@ -166,4 +209,4 @@ function Contacts() {
 
 }
 
-export default Contacts;
+export default Personal;

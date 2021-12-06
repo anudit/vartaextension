@@ -37,7 +37,7 @@ class ProfileIcon extends Component {
 
     render() {
         return (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.822 18.096c-3.439-.794-6.64-1.49-5.09-4.418 4.72-8.912 1.251-13.678-3.732-13.678-5.082 0-8.464 4.949-3.732 13.678 1.597 2.945-1.725 3.641-5.09 4.418-3.073.71-3.188 2.236-3.178 4.904l.004 1h23.99l.004-.969c.012-2.688-.092-4.222-3.176-4.935z" /></svg>
+            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd"><path d="M12 0c-5.083 0-8.465 4.949-3.733 13.678 1.596 2.945-1.725 3.641-5.09 4.418-3.073.709-3.187 2.235-3.177 4.904l.004 1h23.99l.004-.969c.012-2.688-.093-4.223-3.177-4.935-3.438-.794-6.639-1.49-5.09-4.418 4.719-8.912 1.251-13.678-3.731-13.678m0 1c1.89 0 3.39.764 4.225 2.15 1.354 2.251.866 5.824-1.377 10.06-.577 1.092-.673 2.078-.283 2.932.937 2.049 4.758 2.632 6.032 2.928 2.303.534 2.412 1.313 2.401 3.93h-21.998c-.01-2.615.09-3.396 2.401-3.93 1.157-.266 5.138-.919 6.049-2.94.387-.858.284-1.843-.304-2.929-2.231-4.115-2.744-7.764-1.405-10.012.84-1.412 2.353-2.189 4.259-2.189" /></svg>
         )
     }
 
@@ -138,5 +138,39 @@ class WalletConnectIcon extends Component {
 
 }
 
+class ReloadIcon extends Component {
 
-export { WalletConnectIcon, GlobeIcon, PersonalIcon, ContactsIcon, SendIcon, MenuIcon, LoginIcon, ProfileIcon, DownArrowIcon, MetaMaskIcon }
+    render() {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" viewBox="0 0 24 24" width="20px">
+                <path d="M7 9H0V2h1v5.2A12 12 0 1 1 0 13h1a11 11 0 1 0 .8-5H7v1z" />
+            </svg>
+        )
+    }
+
+}
+
+class AddIcon extends Component {
+
+    render() {
+        return (
+            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" width="25px"><path d="M11 11v-11h1v11h11v1h-11v11h-1v-11h-11v-1h11z" /></svg>
+        )
+    }
+
+}
+
+class ConvoIcon extends Component {
+
+    render() {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1000 1000" height="40px" width="40px">
+                <path fill="#010101" d="M461 500l234 226a326 326 0 11-8-461L461 500z" />
+                <circle fill="#010101" cx="762.4" cy="500" r="137.2" />
+            </svg>
+        )
+    }
+
+}
+
+export { ConvoIcon, AddIcon, ReloadIcon, WalletConnectIcon, GlobeIcon, PersonalIcon, ContactsIcon, SendIcon, MenuIcon, LoginIcon, ProfileIcon, DownArrowIcon, MetaMaskIcon }

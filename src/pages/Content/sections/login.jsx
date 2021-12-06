@@ -24,6 +24,7 @@ let WalletItem = styled(Flex)`
 `;
 
 let Avatar = styled.img`
+    border-radius: 200px;
     background:"#ffffff00";
     width: ${props => Boolean(props.width) === true ? props.width : ""};
     height: ${props => Boolean(props.height) === true ? props.height : ""};
@@ -70,10 +71,12 @@ function Login() {
                     src={Boolean(customPfp) === true ? customPfp : getAvatar(signerAddress, { dataUri: true })}
                     width="100px"
                     height="100px"
-                ></Avatar>
-                <p> Welcome, <b>{prettyName === "" ? truncateAddress(signerAddress) : prettyName}</b> </p>
-                <p> TrustScore: {verified} </p>
+                />
                 <br />
+                Welcome, <b>{prettyName === "" ? truncateAddress(signerAddress) : prettyName}</b>
+                <br />
+                TrustScore: {verified}
+                <br /><br />
                 <WalletItem onClick={disconnectWallet} minH="40px" backgroundImage="linear-gradient(163deg, rgb(255 0 0) -258.34%, rgb(238 120 98 / 18%) 100.95%);">
                     Disconnect Wallet
                 </WalletItem>
