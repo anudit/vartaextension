@@ -1,32 +1,12 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { Button, Flex } from '../../../components/Base';
+import { Switch } from '@headlessui/react';
+
+import { Button, Flex, IconButton, Input } from '../../../components/Base';
 import { AddIcon, ReloadIcon } from '../../../components/Icons';
 import ThreadView from '../../../components/ThreadView';
 import TabShell from '../../../components/TabShell';
 import { Web3Context } from '../../../contexts/Web3Context';
-
-const Input = styled.input`
-    width: ${props => Boolean(props.width) === true ? props.width : "100%"};
-    margin-top: 4px;
-    margin-bottom: 4px;
-    border-radius: 5px;
-    border: none;
-    height: 30px;
-`;
-
-const IconButton = styled.button`
-    width: ${props => (props.size === "sm" ? "54" : "50")}px !important;
-    height: ${props => (props.size === "sm" ? "40" : "50")}px !important;
-    display:flex;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border-radius: 100px;
-    border:none;
-    padding: ${props => (props.size === "sm" ? "4" : "8")}px !important;
-`;
 
 let ButtonStyled = styled.button`
     border-radius: 10px;
@@ -59,7 +39,8 @@ function Personal() {
     const inputMembersRef = useRef();
     const inputModeratorsRef = useRef();
     const inputKeywordsRef = useRef();
-    const isReadPublicRef = useRef();
+    const [isReadPublicRef, setIsReadPublicRef] = useState(false)
+
     const isWritePublicRef = useRef();
 
     useEffect(() => {
@@ -69,9 +50,7 @@ function Personal() {
     async function refreshThreads() {
         let threadsData = await convo.threads.getUserThreads(signerAddress);
         if (threadsData?.success === true) {
-            console.log(threadsData.member.toString());
             let threads = await convo.threads.getThreads(threadsData.member.toString());
-            console.log(threads.threads);
             setThreads(threads.threads);
         }
         else {
@@ -131,7 +110,7 @@ function Personal() {
                 {
                     Boolean(threads) === false && (
                         <Flex width="100%" display="flex" justifyContent="center">
-                            <div class="loader"></div>
+                            <div className="loader"></div>
                         </Flex>
                     )
                 }
@@ -181,7 +160,7 @@ function Personal() {
         return (
             <TabShell>
                 <Flex flexDirection="row">
-                    <p onClick={() => { setActiveScreen('home') }}>Back</p>
+                    <p style={{ margin: 0 }} onClick={() => { setActiveScreen('home') }}>Back</p>
                 </Flex>
                 <ThreadView screenData={screenData} />
             </TabShell>
@@ -220,9 +199,15 @@ function Personal() {
                     </Flex>
                     <br />
                     <Flex flexDirection="row" alignItems="center">
+
                         <Flex flexDirection="column" width="50%">
-                            <Input width="100%" type="checkbox" ref={isReadPublicRef} />
-                            <span>Read Public</span>
+                            {/* <Input width="100%" type="checkbox" ref={isReadPublicRef} /> */}
+                            <Switch
+                                checked={isReadPublicRef}
+                                onChange={setIsReadPublicRef}
+                            >
+                                <span className="sr-only">Read Public</span>
+                            </Switch>
                         </Flex>
                         <Flex flexDirection="column" width="50%">
                             <Input width="100%" type="checkbox" ref={isWritePublicRef} />

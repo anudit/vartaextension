@@ -48,4 +48,26 @@ const Button = styled.button`
   ${display}
 `;
 
-export { Flex, Button }
+const IconButton = styled.button`
+    width: ${props => (props.size === "sm" ? "54" : "50")}px !important;
+    height: ${props => (props.size === "sm" ? "40" : "50")}px !important;
+    display:flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border-radius: 100px;
+    border:none;
+    padding: ${props => (props.size === "sm" ? "4" : "8")}px !important;
+`;
+
+const Input = styled.input`
+    width: ${props => Boolean(props.width) === true ? props.width : "100%"};
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border-radius: 5px;
+    border: none;
+    height: 30px;
+`;
+
+export { Flex, Button, IconButton, Input }

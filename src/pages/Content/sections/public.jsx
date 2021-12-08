@@ -186,7 +186,7 @@ function PublicTab({ setTabIndex }) {
 
                     ) : (
                         <Flex height="50px" display="flex" flexDirection="row" >
-                            <LoginButton onClick={() => { setTabIndex(3) }}>
+                            <LoginButton onClick={() => { setTabIndex(2) }}>
                                 Login
                             </LoginButton>
                         </Flex>
