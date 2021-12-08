@@ -99,7 +99,7 @@ function App() {
                                 </Tab>
                             </TabList>
                         </Flex>
-                        <Flex>
+                        <Flex flexDirection="column">
                             <ScrollButton onClick={scrollDown}>
                                 <DownArrowIcon />
                             </ScrollButton>

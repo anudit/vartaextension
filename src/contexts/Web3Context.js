@@ -119,7 +119,7 @@ export const Web3ContextProvider = ({ children }) => {
                 console.log('ethereumProvider', window.ethereum);
 
 
-                accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
                 // accounts = await window.ethereum.enable();
                 console.log('accounts', accounts);
                 ethersProvider = new ethers.providers.Web3Provider(window.ethereum);

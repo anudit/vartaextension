@@ -18,8 +18,8 @@ const Flex = styled.div`
    ${height}
    ${width}
    ${border}
-   ${display}
    ${alignItems}
+   display: ${props => Boolean(props.display) === true ? props.display : "flex"};
    cursor: ${props => props.cursor};
    padding-top: ${props => props.paddingTop || props.pt};
    padding-bottom: ${props => props.paddingBottom || props.pb};
