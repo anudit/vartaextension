@@ -20,6 +20,7 @@ const Flex = styled.div`
    ${border}
    ${display}
    ${alignItems}
+   cursor: ${props => props.cursor};
    padding-top: ${props => props.paddingTop || props.pt};
    padding-bottom: ${props => props.paddingBottom || props.pb};
    backdrop-filter: ${props => props.backdropFilter};

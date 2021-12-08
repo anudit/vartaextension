@@ -18,6 +18,7 @@ const IconButton = styled.button`
     width: ${props => (props.size === "sm" ? "54" : "50")}px !important;
     height: ${props => (props.size === "sm" ? "40" : "50")}px !important;
     display:flex;
+    cursor: pointer;
     align-items: center;
     justify-content: center;
     background: transparent;
@@ -97,13 +98,14 @@ function Personal() {
 
         return (
             <TabShell>
-                <Flex display="flex" flexDirection="row">
-                    <Input width="100%" ref={searchInput} onChange={() => {
-                        setSearchString(searchInput.current.value);
-                    }} />
+                <Flex display="flex" flexDirection="row" marginTop="5px" marginBottom="5px">
+                    <br />
                     <IconButton onClick={() => { setActiveScreen('create') }} size="sm">
                         <AddIcon />
                     </IconButton>
+                    <Input width="100%" ref={searchInput} onChange={() => {
+                        setSearchString(searchInput.current.value);
+                    }} />
                     <IconButton onClick={() => { refreshThreads() }} size="sm">
                         <ReloadIcon />
                     </IconButton>
@@ -118,35 +120,34 @@ function Personal() {
                         <p>No threads.</p>
                     )
                 }
-                <Flex display="flex" flexDirection="column">
-                    {
-                        Boolean(threads) === true && threads.length > 0 && threads.map(t => {
-                            return (
-                                <Flex
-                                    display={t.title.toLowerCase().includes(searchString.toLowerCase()) === true ? "flex" : "none"}
-                                    key={t._id}
-                                    textAlign="left"
-                                    paddingTop="5px"
-                                    paddingBottom="5px"
-                                    paddingRight="10px"
-                                    paddingLeft="10px"
-                                    marginTop="5px"
-                                    marginBottom="5px"
-                                    marginRight="5px"
-                                    marginLeft="5px"
-                                    backgroundColor="#ffffff42"
-                                    borderRadius="10px"
-                                    cursor="pointer"
-                                    onClick={() => {
-                                        setActiveScreen('viewThread');
-                                        setscreenData(t);
-                                    }}
-                                >
-                                    {decodeURIComponent(t.title)}
-                                </Flex>
-                            )
-                        })
-                    }
+                <Flex display="flex" flexDirection="column">                    {
+                    Boolean(threads) === true && threads.length > 0 && threads.map(t => {
+                        return (
+                            <Flex
+                                display={t.title.toLowerCase().includes(searchString.toLowerCase()) === true ? "flex" : "none"}
+                                key={t._id}
+                                textAlign="left"
+                                paddingTop="5px"
+                                paddingBottom="5px"
+                                paddingRight="10px"
+                                paddingLeft="10px"
+                                marginTop="5px"
+                                marginBottom="5px"
+                                marginRight="5px"
+                                marginLeft="5px"
+                                backgroundColor="#ffffff42"
+                                borderRadius="10px"
+                                cursor="pointer"
+                                onClick={() => {
+                                    setActiveScreen('viewThread');
+                                    setscreenData(t);
+                                }}
+                            >
+                                {decodeURIComponent(t.title)}
+                            </Flex>
+                        )
+                    })
+                }
                 </Flex>
             </TabShell>
         );

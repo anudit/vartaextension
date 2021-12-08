@@ -217,12 +217,10 @@ export const Web3ContextProvider = ({ children }) => {
 
         if (chainName === "ethereum") {
 
-            console.log('sending sig')
             let signature = await tempProvider.send(
                 'personal_sign',
                 [ethers.utils.hexlify(ethers.utils.toUtf8Bytes(data)), signerAddress.toLowerCase()]
             );
-            console.log('sig', signature);
 
             res = await convo.auth.authenticate(signerAddress, signature, timestamp, "ethereum");
 

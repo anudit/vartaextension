@@ -23,6 +23,7 @@ class PersonalIcon extends Component {
 class ContactsIcon extends Component {
 
     render() {
+        fill - rule
         return (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 337.6 337.6" width="24" height="24">
                 <path d="M338 68V39c0-17-15-31-32-31h-55c-5-3-10-5-17-5H33C15 3 0 17 0 35v267c0 18 15 33 33 33h201c7 0 12-2 17-5h55c17 0 32-14 32-32v-28c0-10-5-19-12-24 7-6 12-15 12-25v-28c0-10-5-18-12-24 7-6 12-15 12-24v-29c0-10-5-18-12-24 7-6 12-15 12-24zm-86 234c0 10-8 18-18 18H33c-10 0-18-8-18-18V35c0-9 8-17 18-17h201c10 0 18 8 18 17v267zm71-4c0 9-8 17-17 17h-42c2-4 3-8 3-13v-49h39c9 0 17 8 17 17v28zm0-77c0 10-8 17-17 17h-39v-62h39c9 0 17 8 17 17v28zm0-76c0 9-8 16-17 16h-39V99h39c9 0 17 8 17 17v29zm0-77c0 9-8 16-17 16h-39V35l-3-12h42c9 0 17 7 17 16v29z" />
@@ -47,7 +48,12 @@ class LoginIcon extends Component {
 
     render() {
         return (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 9.408l2.963 2.592-2.963 2.592v-1.592h-8v-2h8v-1.592zm-2-4.408v4h-8v6h8v4l8-7-8-7zm6-3c-1.787 0-3.46.474-4.911 1.295l.228.2 1.396 1.221c1.004-.456 2.114-.716 3.287-.716 4.411 0 8 3.589 8 8s-3.589 8-8 8c-1.173 0-2.283-.26-3.288-.715l-1.396 1.221-.228.2c1.452.82 3.125 1.294 4.912 1.294 5.522 0 10-4.477 10-10s-4.478-10-10-10z" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 551.13 551.13" height="24px">
+                <g>
+                    <path xmlns="http://www.w3.org/2000/svg" d="m499.462 0h-378.902c-9.52 0-17.223 7.703-17.223 17.223v51.668h34.446v-34.445h344.456v482.239h-344.456v-34.446h-34.446v51.668c0 9.52 7.703 17.223 17.223 17.223h378.902c9.52 0 17.223-7.703 17.223-17.223v-516.684c0-9.52-7.704-17.223-17.223-17.223z" fill="#000000"></path>
+                    <path xmlns="http://www.w3.org/2000/svg" d="m204.588 366.725 24.354 24.354 115.514-115.514-115.514-115.514-24.354 24.354 73.937 73.937h-244.079v34.446h244.08z" fill="#000000"></path>
+                </g>
+            </svg>
         )
     }
 
@@ -154,7 +160,7 @@ class AddIcon extends Component {
 
     render() {
         return (
-            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" width="25px"><path d="M11 11v-11h1v11h11v1h-11v11h-1v-11h-11v-1h11z" /></svg>
+            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" width="25px"><path d="M11 11v-11h1v11h11v1h-11v11h-1v-11h-11v-1h11z" /></svg>
         )
     }
 
