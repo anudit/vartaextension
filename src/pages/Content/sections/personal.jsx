@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { Switch } from '@headlessui/react';
-
-import { Button, Flex, IconButton, Input } from '../../../components/Base';
+import { Flex, IconButton, Input } from '../../../components/Base';
 import { AddIcon, ReloadIcon } from '../../../components/Icons';
 import ThreadView from '../../../components/ThreadView';
 import TabShell from '../../../components/TabShell';
 import { Web3Context } from '../../../contexts/Web3Context';
+import { MultiValueInput, MultiValueAddressInput } from '../../../components/MultiValueInput';
+import Switch from '../../../components/ToggleSwitch';
 
 let ButtonStyled = styled.button`
     border-radius: 10px;
@@ -32,6 +32,8 @@ function Personal() {
     const [activeScreen, setActiveScreen] = useState('home');
     const [screenData, setscreenData] = useState({});
     const [searchString, setSearchString] = useState("");
+    const [isReadPublic, setIsReadPublic] = useState(false);
+    const [isWritePublic, setIsWritePublic] = useState(false);
 
     const searchInput = useRef();
     const inputTitleRef = useRef();
@@ -39,9 +41,6 @@ function Personal() {
     const inputMembersRef = useRef();
     const inputModeratorsRef = useRef();
     const inputKeywordsRef = useRef();
-    const [isReadPublicRef, setIsReadPublicRef] = useState(false)
-
-    const isWritePublicRef = useRef();
 
     useEffect(() => {
         refreshThreads();
@@ -68,8 +67,8 @@ function Personal() {
             members: inputMembersRef.current.value.split(',').map((s) => { return s.trim() }),
             moderators: inputModeratorsRef.current.value.split(',').map((s) => { return s.trim() }),
             keywords: inputKeywordsRef.current.value.split(',').map((s) => { return s.trim() }),
-            isReadPublic: isReadPublicRef.current.checked,
-            isWritePublic: isWritePublicRef.current.checked,
+            isReadPublic: isReadPublic,
+            isWritePublic: isWritePublic,
         })
         let resp = await convo.threads.create(
             signerAddress,
@@ -77,8 +76,8 @@ function Personal() {
             inputTitleRef.current.value,
             inputDescriptionRef.current.value,
             url,
-            isReadPublicRef.current.checked,
-            isWritePublicRef.current.checked,
+            isReadPublic,
+            isWritePublic,
             inputMembersRef.current.value.split(',').map((s) => { return s.trim() }),
             inputModeratorsRef.current.value.split(',').map((s) => { return s.trim() }),
             inputKeywordsRef.current.value.split(',').map((s) => { return s.trim() }),
@@ -88,6 +87,7 @@ function Personal() {
 
     if (signerAddress === "") {
         return (<TabShell>
+            <br />
             Login to view Private Threads.
         </TabShell>)
     }
@@ -177,41 +177,43 @@ function Personal() {
                         <p style={{ margin: "0px" }}>Create a New Thread</p>
                         <p style={{ margin: "0px", visibility: "hidden" }}>Nodisp</p>
                     </Flex>
+                    <br />
                     <Flex flexDirection="column" textAlign="left" marginBottom="4px">
                         <p style={{ margin: "0px" }}>Title</p>
-                        <Input width="97%" defaultValue="Title" ref={inputTitleRef} />
+                        <Input defaultValue="Title" ref={inputTitleRef} />
                     </Flex>
                     <Flex flexDirection="column" textAlign="left" marginBottom="4px">
                         <p style={{ margin: "0px" }}>Description</p>
-                        <Input width="97%" defaultValue="Desc" ref={inputDescriptionRef} />
+                        <Input defaultValue="Desc" ref={inputDescriptionRef} />
                     </Flex>
                     <Flex flexDirection="column" textAlign="left" marginBottom="4px">
                         <p style={{ margin: "0px" }}>Members</p>
-                        <Input width="97%" defaultValue="0x707aC3937A9B31C225D8C240F5917Be97cab9F20" ref={inputMembersRef} />
+                        <MultiValueAddressInput inputRef={inputMembersRef} />
                     </Flex>
                     <Flex flexDirection="column" textAlign="left" marginBottom="4px">
                         <p style={{ margin: "0px" }}>Moderators</p>
-                        <Input width="97%" defaultValue="0x707aC3937A9B31C225D8C240F5917Be97cab9F20" ref={inputModeratorsRef} />
+                        <MultiValueAddressInput inputRef={inputModeratorsRef} />
+                        {/* <Input defaultValue="0x707aC3937A9B31C225D8C240F5917Be97cab9F20" /> */}
                     </Flex>
                     <Flex flexDirection="column" textAlign="left" marginBottom="4px">
                         <p style={{ margin: "0px" }}>Keywords</p>
-                        <Input width="97%" defaultValue="one, two,3" ref={inputKeywordsRef} />
+                        <MultiValueInput inputRef={inputKeywordsRef} />
                     </Flex>
                     <br />
                     <Flex flexDirection="row" alignItems="center">
-
-                        <Flex flexDirection="column" width="50%">
-                            {/* <Input width="100%" type="checkbox" ref={isReadPublicRef} /> */}
-                            <Switch
-                                checked={isReadPublicRef}
-                                onChange={setIsReadPublicRef}
-                            >
-                                <span className="sr-only">Read Public</span>
-                            </Switch>
+                        <Flex flexDirection="row" width="50%" justifyContent="center" alignItems="center">
+                            <span style={{ marginRight: "0px" }}>Read Public</span>
+                            <Switch id="isReadPublic"
+                                toggled={isReadPublic}
+                                onChange={(e) => setIsReadPublic(e.target.checked)}
+                            />
                         </Flex>
-                        <Flex flexDirection="column" width="50%">
-                            <Input width="100%" type="checkbox" ref={isWritePublicRef} />
-                            <span>Write Public</span>
+                        <Flex flexDirection="row" width="50%" justifyContent="center" alignItems="center">
+                            <span style={{ marginRight: "0px" }}>Write Public</span>
+                            <Switch id="isWritePublic"
+                                toggled={isWritePublic}
+                                onChange={(e) => setIsWritePublic(e.target.checked)}
+                            />
                         </Flex>
                     </Flex>
                     <br />

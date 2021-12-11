@@ -179,4 +179,16 @@ class ConvoIcon extends Component {
 
 }
 
-export { ConvoIcon, AddIcon, ReloadIcon, WalletConnectIcon, GlobeIcon, PersonalIcon, ContactsIcon, SendIcon, MenuIcon, LoginIcon, ProfileIcon, DownArrowIcon, MetaMaskIcon }
+class CloseIcon extends Component {
+
+    render() {
+        return (
+            <svg viewBox="0 0 12 12" width="12" height="12" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 6 5.614 L 11.614 0 L 12 0.385 L 6.385 6 L 12 11.614 L 11.614 12 L 6 6.385 L 0.385 12 L 0 11.614 L 5.614 6 L 0 0.385 L 0.385 0 L 6 5.614 Z" />
+            </svg>
+        )
+    }
+
+}
+
+export { CloseIcon, ConvoIcon, AddIcon, ReloadIcon, WalletConnectIcon, GlobeIcon, PersonalIcon, ContactsIcon, SendIcon, MenuIcon, LoginIcon, ProfileIcon, DownArrowIcon, MetaMaskIcon }

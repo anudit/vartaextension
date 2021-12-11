@@ -1,7 +1,7 @@
-.app-convo::-webkit-scrollbar {
+/* .app-convo::-webkit-scrollbar {
     display: none !important;
 }
-
+ */
 .publicTab::-webkit-scrollbar {
     display: none !important;
 }
@@ -20,6 +20,15 @@
     100% { transform: rotate(360deg); }
 }
 
-.app-convo > input.largerCheckbox {
-    transform : scale(9.5);
+.custom-scroll::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
 }

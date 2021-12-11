@@ -36,7 +36,6 @@ var server = new WebpackDevServer(compiler, {
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-  liveReload: true,
   devMiddleware: {
     writeToDisk: true
   }

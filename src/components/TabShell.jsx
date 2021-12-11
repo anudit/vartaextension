@@ -3,7 +3,7 @@ import { Flex } from './Base';
 
 function TabShell(props) {
     return (
-        <Flex display="flex" flexDirection="column" height="500px" alignItems={props?.alignItems}>
+        <Flex className={"custom-scroll"} display="flex" flexDirection="column" height="500px" alignItems={props?.alignItems} overflowY="scroll">
             {props.children}
         </Flex>
     );
