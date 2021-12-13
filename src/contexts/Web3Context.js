@@ -31,10 +31,12 @@ export const Web3ContextProvider = ({ children }) => {
     const cookies = Cookies.withAttributes({
         path: '/'
     })
+
     const [provider, setProvider] = useState(undefined);
     const [connectedChain, setConnectedChain] = useState("");
     const [signerAddress, setSignerAddress] = useState("");
     const [prettyName, setPrettyName] = useState("");
+    const [connectingState, setConnectingState] = useState('LOGIN');
     const convo = new Convo('CSCpPwHnkB3niBJiUjy92YGP6xVkVZbWfK8xriDO');
 
     useEffect(() => {
@@ -142,7 +144,9 @@ export const Web3ContextProvider = ({ children }) => {
 
                     // if previous session is invalid then request a new auth token.
                     if (tokenRes['success'] === false) {
+                        setConnectingState('PLEASE_SIGN_MESSAGE');
                         let token = await updateAuthToken(accounts[0], "ethereum", ethersProvider, choice);
+                        setConnectingState('LOGIN');
                         if (token !== false) {
                             setProvider(ethersProvider);
                             setConnectedChain("ethereum");
@@ -158,7 +162,9 @@ export const Web3ContextProvider = ({ children }) => {
                     }
                 }
                 else { // auth and store a new session.
+                    setConnectingState('PLEASE_SIGN_MESSAGE');
                     let token = await updateAuthToken(accounts[0], "ethereum", ethersProvider, choice);
+                    setConnectingState('LOGIN');
                     if (token !== false) {
                         setProvider(ethersProvider);
                         setConnectedChain("ethereum");
@@ -184,6 +190,7 @@ export const Web3ContextProvider = ({ children }) => {
         setConnectedChain("");
         setSignerAddress("");
         setPrettyName("");
+        setConnectingState("");
     }
 
     async function getAuthToken(manualAddress = undefined) {
@@ -252,7 +259,8 @@ export const Web3ContextProvider = ({ children }) => {
             signerAddress,
             prettyName,
             getAuthToken,
-            convo
+            convo,
+            connectingState
         }}>
             {children}
         </Web3Context.Provider>

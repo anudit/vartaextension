@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import styled from 'styled-components';
-import timeAgo, { truncateAddress } from '../../../utils/stringUtils';
 import { Flex } from '../../../components/Base';
 import { MenuIcon, SendIcon } from '../../../components/Icons';
 import { Web3Context } from '../../../contexts/Web3Context';
 import TabShell from '../../../components/TabShell';
+import MessagesRenderer from '../../../components/MessagesRenderer';
 
 const MessageAuthor = styled.p`
   font-size: 1em;
@@ -55,7 +55,7 @@ const IconButton = styled.button`
     display:flex;
     align-items: center;
     justify-content: center;
-    background: #ffffff70;
+    background: transparent;
     border-radius: 100px;
     border:none;
     padding:8px;
@@ -151,26 +151,7 @@ function PublicTab({ setTabIndex }) {
         return (
             <TabShell>
                 <Flex height="450px" display="flex" flexDirection="column" overflow="scroll" className="publicTab" id="commentsBox">
-                    {
-                        comments.map(comment => {
-                            return (
-                                <MessageRow type={comment.author === signerAddress ? 1 : 0} key={comment._id}>
-                                    <Bubble display="flex" flexDirection="column" direction="column" type={comment.author === signerAddress ? 1 : 0} pb="10px">
-                                        <Flex display="flex" flexDirection="row" justifyContent="space-between" ml={1}>
-                                            <MessageAuthor>
-                                                {Boolean(comment.authorENS) === true ? comment.authorENS : truncateAddress(comment.author)}
-                                            </MessageAuthor>
-                                            <MessageAuthor>
-                                                {timeAgo(parseInt(comment.createdOn))}
-                                            </MessageAuthor>
-                                        </Flex>
-
-                                        <MessageText>{decodeURIComponent(comment.text)}</MessageText>
-                                    </Bubble>
-                                </MessageRow>
-                            )
-                        })
-                    }
+                    <MessagesRenderer comments={comments} />
                 </Flex>
                 {
                     signerAddress !== "" ? (

@@ -30,7 +30,6 @@ function App() {
     const [tabIndex, setTabIndex] = useState(0);
 
     async function scrollDown() {
-
         let commentsBox = document.getElementById('commentsBox');
         if (Boolean(commentsBox) === true) {
             const scroll = commentsBox.scrollHeight - commentsBox.clientHeight;
