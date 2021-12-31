@@ -39,24 +39,38 @@ export const Web3ContextProvider = ({ children }) => {
     const [connectingState, setConnectingState] = useState('LOGIN');
     const convo = new Convo('CSCpPwHnkB3niBJiUjy92YGP6xVkVZbWfK8xriDO');
 
+    async function getSessionDetails() {
+        return new Promise(function (resolve, reject) {
+            chrome.storage.sync.get(['convo_session'], function (result) {
+                resolve(result?.convo_session);
+            });
+        });
+    }
+
+    async function setSessionDetails(convo_session) {
+        return new Promise(function (resolve, reject) {
+            chrome.storage.sync.set({ convo_session }, function () {
+                resolve(true)
+            });
+        });
+    }
+
     useEffect(() => {
-        setTimeout(() => {
-            let sessionCookie = cookies.get('CONVO_SESSION');
-            let choiceCookie = cookies.get('CONVO_LAST_CONNECTED_CHOICE');
-            if (Boolean(sessionCookie) === true) {
-                if (Boolean(choiceCookie) === true) {
-                    try {
-                        connectWallet(choiceCookie);
-                    } catch (error) {
-                        console.log('autologin error', error);
-                    }
+        setTimeout(async () => {
+            let session = await getSessionDetails();
+            console.log('Trying Autologin');
+            if (Boolean(session.sessionCookie) === true && Boolean(session.choiceCookie) === true && Boolean(session.accounts?.length) === true) {
+                try {
+                    connectWallet(session.choiceCookie, true, session);
+                } catch (error) {
+                    console.log('autologin error', error);
                 }
             }
         }, 3000)
     }, []);
 
     async function updatePrettyName(address) {
-        let tp = new ethers.providers.AlchemyProvider("mainnet", "A4OQ6AV7W-rqrkY9mli5-MCt-OwnIRkf");
+        let tp = new ethers.providers.AlchemyProvider("homestead", "aCCNMibQ1zmvthnsyWUWFkm_UAvGtZdv");
         let ensReq = tp.lookupAddress(address);
         // let udReq = checkUnstoppableDomains(address);
 
@@ -72,7 +86,7 @@ export const Web3ContextProvider = ({ children }) => {
         // }
     }
 
-    async function connectWallet(choice = "") {
+    async function connectWallet(choice = "", manualSession = false, manualSessionDetails = {}) {
         try {
 
             console.log("choice", choice);
@@ -81,67 +95,76 @@ export const Web3ContextProvider = ({ children }) => {
             let accounts;
             let isProviderSet = false;
 
+            // If not continuing a previous session then go through the entire wallet flow.
+            if (Boolean(manualSession) === false) {
 
-            if (choice === "walletconnect") {
+                if (choice === "walletconnect") {
 
-                const provider = new WalletConnectProvider({
-                    infuraId: "1e7969225b2f4eefb3ae792aabf1cc17",
-                    qrcodeModalOptions: {
-                        mobileLinks: [
-                            "rainbow",
-                            "metamask",
-                            "argent",
-                            "trust",
-                            "imtoken",
-                            "pillar",
-                        ],
-                    },
-                });
+                    const provider = new WalletConnectProvider({
+                        infuraId: "1e7969225b2f4eefb3ae792aabf1cc17",
+                        qrcodeModalOptions: {
+                            mobileLinks: [
+                                "rainbow",
+                                "metamask",
+                                "argent",
+                                "trust",
+                                "imtoken",
+                                "pillar",
+                            ],
+                        },
+                    });
 
-                await provider.enable();
+                    await provider.enable();
 
-                ethersProvider = new ethers.providers.Web3Provider(provider);
-                accounts = await ethersProvider.listAccounts();
-                console.log(accounts);
+                    ethersProvider = new ethers.providers.Web3Provider(provider);
+                    accounts = await ethersProvider.listAccounts();
+                    console.log(accounts);
+                    isProviderSet = true;
+
+                }
+                else if (choice === "torus") {
+
+                    const torus = new Torus();
+                    await torus.init();
+                    await torus.login();
+
+                    ethersProvider = new ethers.providers.Web3Provider(torus.provider);
+                    accounts = await ethersProvider.listAccounts();
+                    isProviderSet = true;
+                }
+                else if (choice === "injected") {
+
+                    console.log('ethereumProvider', window.ethereum);
+
+
+                    accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
+                    // accounts = await window.ethereum.enable();
+                    console.log('accounts', accounts);
+                    ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
+                    console.log('ethersProvider', ethersProvider);
+                    // accounts = await ethersProvider.listAccounts();
+                    console.log('accounts', accounts);
+                    isProviderSet = true;
+                }
+                else {
+                    console.log('Invalid Choice.');
+                }
+            }
+
+            // If continuing a previous session, then set up the variables accoring to the previous session.
+            if (Boolean(manualSession) === true) {
+                ethersProvider = new ethers.providers.AlchemyProvider('homestead', 'aCCNMibQ1zmvthnsyWUWFkm_UAvGtZdv');
+                accounts = manualSessionDetails.accounts;
                 isProviderSet = true;
-
             }
-            else if (choice === "torus") {
-
-                const torus = new Torus();
-                await torus.init();
-                await torus.login();
-
-                ethersProvider = new ethers.providers.Web3Provider(torus.provider);
-                accounts = await ethersProvider.listAccounts();
-                isProviderSet = true;
-            }
-            else if (choice === "injected") {
-
-                console.log('ethereumProvider', window.ethereum);
-
-
-                accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
-                // accounts = await window.ethereum.enable();
-                console.log('accounts', accounts);
-                ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
-                console.log('ethersProvider', ethersProvider);
-                // accounts = await ethersProvider.listAccounts();
-                console.log('accounts', accounts);
-                isProviderSet = true;
-            }
-            else {
-                console.log('Invalid Choice.');
-            }
-
 
             if (isProviderSet === true) {
 
                 // if there was a previous session, try and validate that first.
-                if (Boolean(cookies.get('CONVO_SESSION')) === true) {
+                if (Boolean(manualSessionDetails?.sessionCookie) === true) {
 
-                    let tokenRes = convo.auth.validate(accounts[0], cookies.get('CONVO_SESSION'));
-
+                    let tokenRes = convo.auth.validate(accounts[0], manualSessionDetails.sessionCookie);
+                    console.log('tokenRes', tokenRes);
                     // if previous session is invalid then request a new auth token.
                     if (tokenRes['success'] === false) {
                         setConnectingState('PLEASE_SIGN_MESSAGE');
@@ -185,7 +208,14 @@ export const Web3ContextProvider = ({ children }) => {
     }
 
     function disconnectWallet() {
+        console.log('disconnecting wallet');
+        setSessionDetails({
+            sessionCookie: false,
+            choiceCookie: false,
+            accounts: [],
+        })
         cookies.remove('CONVO_SESSION');
+        cookies.remove('CONVO_LAST_CONNECTED_CHOICE');
         setProvider(undefined);
         setConnectedChain("");
         setSignerAddress("");
@@ -195,11 +225,12 @@ export const Web3ContextProvider = ({ children }) => {
 
     async function getAuthToken(manualAddress = undefined) {
 
+        const { sessionCookie } = await getSessionDetails();
         let authAdd = Boolean(manualAddress) === true ? manualAddress : signerAddress;
-        let tokenRes = await convo.auth.validate(authAdd, cookies.get('CONVO_SESSION'));
+        let tokenRes = await convo.auth.validate(authAdd, sessionCookie);
 
         if (tokenRes['success'] === true) {
-            return cookies.get('CONVO_SESSION');
+            return sessionCookie;
         }
         else {
             try {
@@ -233,13 +264,12 @@ export const Web3ContextProvider = ({ children }) => {
 
         }
 
-        console.log('res', res);
-
         if (res?.success === true) {
-            cookies.set('CONVO_SESSION', res['message'], { expires: 1, secure: true });
-            if (choice !== "") {
-                cookies.set('CONVO_LAST_CONNECTED_CHOICE', choice, { expires: 30, secure: true });
-            }
+            await setSessionDetails({
+                sessionCookie: res['message'],
+                choiceCookie: choice !== "" ? choice : false,
+                accounts: [signerAddress]
+            });
             console.log('valid session setup.')
             return res['message'];
         }

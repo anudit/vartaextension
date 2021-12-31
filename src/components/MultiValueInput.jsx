@@ -70,7 +70,7 @@ export const MultiValueAddressInput = (props) => {
                 if (value.length > 0) {
                     if (isBlockchainAddress(value) === true) {
                         if (isAddress(value) === true) {
-                            let tp = new ethers.providers.AlchemyProvider("mainnet", "A4OQ6AV7W-rqrkY9mli5-MCt-OwnIRkf");
+                            let tp = new ethers.providers.AlchemyProvider("homestead", "aCCNMibQ1zmvthnsyWUWFkm_UAvGtZdv");
                             let ensReq = await tp.lookupAddress(value);
                             if (Boolean(ensReq) === true) {
                                 let newValues = Array.from(new Set([...values, {

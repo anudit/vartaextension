@@ -111,7 +111,9 @@ var options = {
       assert: false,
       process: false,
       browser: false,
-      "crypto": require.resolve("crypto-browserify"),
+      crypto: require.resolve("crypto-browserify"),
+      "path": require.resolve("path-browserify"),
+      "url": require.resolve("url/"),
       "stream": require.resolve("stream-browserify"),
       "buffer": require.resolve("buffer")
     },

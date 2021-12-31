@@ -4,22 +4,6 @@ import ConvoApp from './app';
 import { ThemeProvider } from 'styled-components'
 import { Web3ContextProvider } from '../../contexts/Web3Context';
 
-
-// const customTheme = extendTheme({
-//     styles: {
-//         global: {
-//             body: {
-//                 color: null,
-//                 background: "",
-//                 transitionProperty: null,
-//                 transitionDuration: null,
-//                 fontFamily: null,
-//                 lineHeight: null
-//             }
-//         }
-//     }
-// })
-
 const theme = {
     colors: {
         black: '#000e1a',

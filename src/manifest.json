@@ -1,7 +1,7 @@
 {
-  "name": "The Convo Space",
-  "description": "The Convo Space",
-  "version": "1.1.0",
+  "name": "Varta Extension",
+  "description": "Varta Extension",
+  "version": "2.0.0",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.bundle.js"
@@ -14,8 +14,8 @@
   },
   "permissions": [
     "activeTab",
-    "contextMenus",
-    "scripting"
+    "scripting",
+    "storage"
   ],
   "content_scripts": [
     {

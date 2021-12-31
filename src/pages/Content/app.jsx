@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Flex } from '../../components/Base';
 import '../../styles/react-tabs.css';
 import '../../styles/app.css';
-import { ContactsIcon, GlobeIcon, PersonalIcon, LoginIcon, ProfileIcon, DownArrowIcon, ConvoIcon } from '../../components/Icons';
+import { ContactsIcon, GlobeIcon, PersonalIcon, LoginIcon, ProfileIcon, DownArrowIcon, VartaIcon } from '../../components/Icons';
 import Contacts from './sections/contacts';
 import Personal from './sections/personal';
 import Public from './sections/public';
@@ -39,7 +39,7 @@ function App() {
     }
 
     async function bindOpenWindow(e) {
-        if (e.keyCode == 67 && e.altKey) {
+        if (e.key == 'v' && e.altKey) {
             setIsOpen((current) => !current);
         };
     }
@@ -103,14 +103,14 @@ function App() {
                                 <DownArrowIcon />
                             </ScrollButton>
                             <Button border="none" backgroundColor="#ffffff70" onClick={() => { setIsOpen(!isOpen) }} borderRadius="100px" height="50px" width="50px" padding={1}>
-                                <ConvoIcon />
+                                <VartaIcon />
                             </Button>
                         </Flex>
                     </Flex>
                 </Tabs>
             </Flex>
             <Button display={isOpen === true ? "none" : "flex"} border="none" backgroundColor="#288ac3de" zIndex="1000000" position="fixed" onClick={() => { setIsOpen(!isOpen) }} borderRadius="100px" right="20px" bottom="20px" height="50px" width="50px" padding={1}>
-                <ConvoIcon />
+                <VartaIcon />
             </Button>
         </>
     )

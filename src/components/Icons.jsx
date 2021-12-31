@@ -166,13 +166,17 @@ class AddIcon extends Component {
 
 }
 
-class ConvoIcon extends Component {
+class VartaIcon extends Component {
 
     render() {
         return (
-            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1000 1000" height="40px" width="40px">
-                <path fill="#010101" d="M461 500l234 226a326 326 0 11-8-461L461 500z" />
-                <circle fill="#010101" cx="762.4" cy="500" r="137.2" />
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 512 512" height="40px" width="40px">
+                <path d="M101.5,155.7c0.4,0.3-10,29.8-9.6,30.1c24.4-14.3,58.8-58.7,87.3-65.1c38.6-10.5,80.3-14.1,118.5,0.4
+                    c32.1,3.6,78.9,42.6,96.2,94.2c26.9,54.9,8.3,120-35.5,160.1c-106.7,110.5-278.5-41-171.7-153.8c42.9-47.2,134.4-35.4,146.9,32.9
+                    c3.7,16.5,0.4,32.2-4.4,47.8c-6.6,23.4-38.6,36.5-56.6,17.5c-22.2-13.8-4.8-48.6,18.2-32.9c12.6-29.9-17.2-44.9-42.7-43
+                    c-33.9,4.4-63.8,47.3-40.8,78.2c22.2,61.7,115.1,49.2,150.8,6.3c27.8-34.3,26.4-85.4,3-121.5c-7.8-9.1-10.6-12.6-18.2-21.8
+                    c-18.6-25-50.2-31.6-78.9-36.6c-83.1-13.8-159.7,59.1-162.9,142.3c-1.4,43.1,19.5,83.9,49,114.9c73.1,71.6,210.7,59.7,258.3-34.5
+                    c17.7-35.6,31.3-76,29.6-116.2c-4.4-32.3-7.9-65.4-27.2-92.8C359.6,83.9,251.3,61,168.3,98.9C133.9,115.3,120.9,122,101.5,155.7z"/>
             </svg>
         )
     }
@@ -191,4 +195,4 @@ class CloseIcon extends Component {
 
 }
 
-export { CloseIcon, ConvoIcon, AddIcon, ReloadIcon, WalletConnectIcon, GlobeIcon, PersonalIcon, ContactsIcon, SendIcon, MenuIcon, LoginIcon, ProfileIcon, DownArrowIcon, MetaMaskIcon }
+export { CloseIcon, VartaIcon, AddIcon, ReloadIcon, WalletConnectIcon, GlobeIcon, PersonalIcon, ContactsIcon, SendIcon, MenuIcon, LoginIcon, ProfileIcon, DownArrowIcon, MetaMaskIcon }

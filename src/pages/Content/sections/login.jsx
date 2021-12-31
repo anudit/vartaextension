@@ -41,7 +41,7 @@ function Login() {
 
     useEffect(async () => {
         if (addressToChainName(signerAddress) === "ethereum") {
-            convo.identity.getTrustScore(signerAddress).then(trustData => {
+            convo.omnid.getTrustScore(signerAddress).then(trustData => {
                 if (Boolean(trustData.success) === true) {
                     setVerified(trustData.score);
                 }
@@ -51,7 +51,7 @@ function Login() {
 
     useEffect(() => {
         if (prettyName !== "") {
-            let tp = new ethers.providers.AlchemyProvider("mainnet", "A4OQ6AV7W-rqrkY9mli5-MCt-OwnIRkf");
+            let tp = new ethers.providers.AlchemyProvider("homestead", "aCCNMibQ1zmvthnsyWUWFkm_UAvGtZdv");
             tp.getResolver(prettyName).then(async (resolver) => {
                 let pfp = await resolver?.getText('avatar');
                 if (Boolean(pfp) === true) {
@@ -68,6 +68,7 @@ function Login() {
             <TabShell alignItems="center">
                 <br />
                 <Avatar
+                    alt="avatar"
                     src={Boolean(customPfp) === true ? customPfp : getAvatar(signerAddress, { dataUri: true })}
                     width="100px"
                     height="100px"
@@ -106,7 +107,7 @@ function Login() {
                 }
                 {
                     connectingState === 'PLEASE_SIGN_MESSAGE' && (
-                        <Flex width="100%" display="flex" justifyContent="center">
+                        <Flex width="100%" display="flex" alignItems="center" flexDirection="column">
                             <div className="loader"></div>
                             <br />
                             <p>Please sign the message in your wallet. <br />This is not a transaction.</p>
