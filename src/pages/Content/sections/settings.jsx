@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Contacts() {
+function Settings() {
     return (
         <p>
-            Personal Contacts
+            Settings
         </p>
     );
 }
 
-export default Contacts;
+export default Settings;

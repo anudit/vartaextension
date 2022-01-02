@@ -10,6 +10,7 @@ const MessageAuthor = styled.p`
   padding-top: 0px;
   margin-bottom: 0px;
   margin-top: 0px;
+  color: ${props => props.theme.colors.textDull};
   text-align: ${props => props.align ? props.align : "left"};
 `;
 
@@ -20,6 +21,7 @@ const MessageText = styled.p`
   padding-top: 0px;
   margin-bottom: 0px;
   margin-top: 0px;
+  color: ${props => props.theme.colors.text};
   text-align: ${props => props.align ? props.align : "left"};
 `;
 
@@ -29,7 +31,7 @@ const Bubble = styled(Flex)`
   word-break: break-word;
   margin-bottom:10px;
   padding: 8px;
-  background-color: ${props => props.type === 0 ? "#ffffff70" : "#4c4cff3b"};
+  background-color: ${props => props.type === 0 ? props.theme.colors.primary : props.theme.colors.secondary};
 `;
 
 const MessageRow = styled(Flex)`
@@ -37,7 +39,7 @@ const MessageRow = styled(Flex)`
   display:flex;
   margin-right:5px;
   margin-left:5px;
-  flex-direction: ${props => props.type === 0 ? "row" : "row-reverse"};
+  flex-direction: ${props => props.flexDirection ? props.flexDirection : props.type === 0 ? "row" : "row-reverse"};
 `;
 
 const MessageBox = styled.input`
@@ -57,17 +59,16 @@ function MessagesRenderer({ comments }) {
     else {
         return comments.map(comment => {
             return (
-                <MessageRow type={comment.author === signerAddress ? 1 : 0} key={comment._id}>
+                <MessageRow type={comment.author === signerAddress ? 1 : 0} key={comment._id} display="flex" flexDirection="column">
+                    <Flex display="flex" flexDirection="row" justifyContent="space-between" width="70%">
+                        <MessageAuthor>
+                            {Boolean(comment.authorENS) === true ? comment.authorENS : truncateAddress(comment.author)}
+                        </MessageAuthor>
+                        <MessageAuthor>
+                            {timeAgo(parseInt(comment.createdOn))}
+                        </MessageAuthor>
+                    </Flex>
                     <Bubble display="flex" flexDirection="column" direction="column" type={comment.author === signerAddress ? 1 : 0} pb="10px">
-                        <Flex display="flex" flexDirection="row" justifyContent="space-between" >
-                            <MessageAuthor>
-                                {Boolean(comment.authorENS) === true ? comment.authorENS : truncateAddress(comment.author)}
-                            </MessageAuthor>
-                            <MessageAuthor>
-                                {timeAgo(parseInt(comment.createdOn))}
-                            </MessageAuthor>
-                        </Flex>
-
                         <MessageText>{decodeURIComponent(comment.text)}</MessageText>
                     </Bubble>
                 </MessageRow>

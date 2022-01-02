@@ -3,8 +3,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Flex } from '../../components/Base';
 import '../../styles/react-tabs.css';
 import '../../styles/app.css';
-import { ContactsIcon, GlobeIcon, PersonalIcon, LoginIcon, ProfileIcon, DownArrowIcon, VartaIcon } from '../../components/Icons';
-import Contacts from './sections/contacts';
+import { SettingsIcon, GlobeIcon, PersonalIcon, LoginIcon, ProfileIcon, DownArrowIcon, VartaIcon } from '../../components/Icons';
+import Settings from './sections/Settings';
 import Personal from './sections/personal';
 import Public from './sections/public';
 import Login from './sections/login';
@@ -23,7 +23,7 @@ const ScrollButton = styled.button`
     border: none;
 `;
 
-function App() {
+function App({ setColorMode }) {
 
     const { signerAddress } = useContext(Web3Context);
     const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +55,7 @@ function App() {
                 justifyContent="center"
                 textAlign="center"
                 zIndex="1000000"
-                backgroundColor="#9a9a9a1f"
+                backgroundColor="bg"
                 backdropFilter="blur(10px)"
                 position="fixed"
                 right="10px"
@@ -63,7 +63,7 @@ function App() {
                 height="500px"
                 width="400px"
                 flexDirection="row"
-                borderRadius="20px"
+                borderRadius="10px"
                 display={isOpen === true ? "flex" : "none"}
             >
                 <Tabs selectedIndex={tabIndex} onSelect={index => setTabIndex(index)}>
@@ -74,14 +74,14 @@ function App() {
                         <TabPanel display="flex">
                             <Personal />
                         </TabPanel>
-                        {/* <TabPanel display="flex">
-                            <Contacts />
-                        </TabPanel> */}
                         <TabPanel display="flex">
                             <Login />
                         </TabPanel>
+                        <TabPanel display="flex">
+                            <Settings />
+                        </TabPanel>
                     </Flex>
-                    <Flex width="70px" backgroundColor="#ffffff42" display="flex" paddingTop="10px" borderTopRightRadius="20px" borderBottomRightRadius="20px" justifyContent="space-between" flexDirection="column" alignItems="center" paddingBottom="10px">
+                    <Flex width="70px" backgroundColor="#ffffff42" display="flex" paddingTop="10px" borderTopRightRadius="5px" borderBottomRightRadius="5px" justifyContent="space-between" flexDirection="column" alignItems="center" paddingBottom="10px">
                         <Flex>
                             <TabList>
                                 <Tab>
@@ -90,11 +90,11 @@ function App() {
                                 <Tab>
                                     <PersonalIcon />
                                 </Tab>
-                                {/* <Tab>
-                                    <ContactsIcon />
-                                </Tab> */}
                                 <Tab>
                                     {signerAddress === "" ? <LoginIcon /> : <ProfileIcon />}
+                                </Tab>
+                                <Tab>
+                                    <SettingsIcon />
                                 </Tab>
                             </TabList>
                         </Flex>
@@ -109,7 +109,7 @@ function App() {
                     </Flex>
                 </Tabs>
             </Flex>
-            <Button display={isOpen === true ? "none" : "flex"} border="none" backgroundColor="#288ac3de" zIndex="1000000" position="fixed" onClick={() => { setIsOpen(!isOpen) }} borderRadius="100px" right="20px" bottom="20px" height="50px" width="50px" padding={1}>
+            <Button display={isOpen === true ? "none" : "flex"} border="none" backgroundColor="#288ac3de" zIndex="1000000" position="fixed" onClick={() => { setIsOpen(!isOpen) }} borderRadius="100px" right="20px" bottom="20px" height="50px" width="50px" padding={1} justifyContent="center" alignItems="center">
                 <VartaIcon />
             </Button>
         </>

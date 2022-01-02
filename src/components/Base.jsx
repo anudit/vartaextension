@@ -1,36 +1,22 @@
 import React from 'react';
 import styled from 'styled-components'
-import { space, width, fontSize, color, justifyContent, alignItems, textAlign, zIndex, background, position, bottom, right, flexDirection, height, backgroundColor, borderRadius, padding, display, border, paddingTop, overflow, } from 'styled-system'
+import { shadow, position, border, background, typography, flexbox, layout, space, width, fontSize, color, justifyContent, alignItems, textAlign, zIndex, bottom, right, flexDirection, height, backgroundColor, borderRadius, padding, display, paddingTop, overflow } from 'styled-system'
 
 const Flex = styled.div`
   ${space}
-  ${width}
-  ${fontSize}
+  ${layout}
+  ${flexbox}
+  ${typography}
+  ${shadow}
+  ${typography}
+  ${position}
+  ${background}
+  ${border}
   ${color}
-  ${alignItems}
-  ${justifyContent}
-  ${textAlign}
-  ${zIndex}
-  background-color: ${props => props.backgroundColor};
-   ${position}
-   ${bottom}
-   ${right}
-   ${flexDirection}
-   ${height}
-   ${width}
-   ${border}
-   display: ${props => Boolean(props.display) === true ? props.display : "flex"};
-   cursor: ${props => props.cursor};
-   padding-top: ${props => props.paddingTop || props.pt};
-   padding-bottom: ${props => props.paddingBottom || props.pb};
-   backdrop-filter: ${props => props.backdropFilter};
-   overflow: ${props => props.overflow};
-   overflow-x: ${props => props.overflowX};
-   overflow-y: ${props => props.overflowY};
-   margin-bottom: ${props => props.marginBottom || props.mb};
-   margin-top: ${props => props.marginTop || props.mt};
-   margin-right: ${props => props.marginRight || props.mr};
-   margin-left: ${props => props.marginLeft || props.ml};
+
+  display: ${props => Boolean(props.display) === true ? props.display : "flex"};
+  cursor: ${props => props.cursor};
+  backdrop-filter: ${props => props.backdropFilter};
 `
 
 const Button = styled.button`
@@ -48,9 +34,12 @@ const Button = styled.button`
   ${padding}
   ${border}
   ${display}
+  ${alignItems}
+  ${justifyContent}
 `;
 
 const IconButton = styled.button`
+    ${space}
     width: ${props => (props.size === "sm" ? "54" : "50")}px !important;
     height: ${props => (props.size === "sm" ? "40" : "50")}px !important;
     display:flex;
@@ -65,6 +54,7 @@ const IconButton = styled.button`
 `;
 
 const Input = styled.input`
+    ${space}
     width: ${props => Boolean(props.width) === true ? props.width : "100%"};
     padding: 3px;
     margin-top: 4px;

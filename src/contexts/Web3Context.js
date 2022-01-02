@@ -66,7 +66,7 @@ export const Web3ContextProvider = ({ children }) => {
                     console.log('autologin error', error);
                 }
             }
-        }, 3000)
+        }, 1000)
     }, []);
 
     async function updatePrettyName(address) {

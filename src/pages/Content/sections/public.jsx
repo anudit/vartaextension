@@ -45,20 +45,32 @@ const MessageRow = styled(Flex)`
 const MessageBox = styled.input`
     width: 100%;
     margin: 4px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: none;
+    height: 40px;
+    color: text;
 `;
 
 const IconButton = styled.button`
-    min-width: 50px !important;
-    height: 50px !important;
+    min-width: 40px !important;
+    height: 40px !important;
     display:flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
     border-radius: 100px;
     border:none;
     padding:8px;
+`;
+
+const NeuIconButton = styled(IconButton)`
+    box-shadow: rgb(21, 21, 24) 11px 11px 22px 0px, rgb(36, 37, 41) -11px -11px 22px 0px;
+    background-color: rgb(26, 27, 30);
+    &:hover {
+        box-shadow: rgb(21, 21, 24) 24px 24px 48px 0px, rgb(36, 37, 41) -24px -24px 48px 0px;
+    }
+    &:active {
+        box-shadow: rgb(21, 21, 24) 24px 24px 48px 0px inset, rgb(36, 37, 41) -24px -24px 48px 0px inset;
+    }
 `;
 
 const LoginButton = styled.button`
@@ -155,16 +167,15 @@ function PublicTab({ setTabIndex }) {
                 </Flex>
                 {
                     signerAddress !== "" ? (
-                        <Flex height="50px" display="flex" flexDirection="row">
-                            <IconButton>
+                        <Flex px={2} height="50px" display="flex" flexDirection="row" alignItems="center">
+                            <NeuIconButton >
                                 <MenuIcon />
-                            </IconButton>
+                            </NeuIconButton>
                             <MessageBox type="text" ref={newMessageRef} />
-                            <IconButton onClick={sendMessage}>
+                            <NeuIconButton onClick={sendMessage}>
                                 <SendIcon />
-                            </IconButton>
+                            </NeuIconButton>
                         </Flex>
-
                     ) : (
                         <Flex height="50px" display="flex" flexDirection="row" >
                             <LoginButton onClick={() => { setTabIndex(2) }}>
