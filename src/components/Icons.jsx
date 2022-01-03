@@ -27,6 +27,23 @@ function ContactsIcon() {
     )
 }
 
+function MoonIcon({ width, height, fill }) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 302 302" xmlSpace="preserve" height={height} width={width}>
+            <path fill={fill} d="M205 98c-14-14-33-23-54-23s-40 9-53 23a72 72 0 0 0-23 53 76 76 0 1 0 130-53zm-54-46c6 0 11-5 11-11V10c0-5-5-10-11-10-5 0-10 5-10 10v31c0 6 5 11 10 11zm85 29 22-22c4-4 4-11 0-15s-10-4-14 0l-22 22c-4 4-4 11 0 15s10 4 14 0zm56 60h-31c-5 0-10 5-10 10 0 6 5 11 10 11h31c6 0 10-5 10-11 0-5-4-10-10-10zm-56 81c-4-4-10-4-14 0s-4 10 0 14l22 22c4 4 10 4 14 0s4-10 0-14l-22-22zm-85 29c-5 0-10 5-10 10v31c0 6 5 10 10 10 6 0 11-4 11-10v-31c0-5-5-10-11-10zm-85-29-22 22c-4 4-4 10 0 14s10 4 14 0l22-22c4-4 4-10 0-14-3-4-10-4-14 0zm-14-71c0-5-5-10-11-10H10c-5 0-10 5-10 10s5 11 10 11h31c6 0 11-5 11-11zm14-70c4 4 10 4 14 0s4-11 0-15L58 44c-4-4-10-4-14 0s-4 11 0 15l22 22z" />
+        </svg>
+    )
+}
+
+function SunIcon({ width, height, fill }) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xmlSpace="preserve" height={height} width={width}>
+            <path fill={fill} d="M248 264c-31-32-40-77-26-117a111 111 0 0 0-42 185 112 112 0 0 0 185-42c-40 14-85 5-117-26z" />
+        </svg>
+    )
+}
+
+
 function SettingsIcon() {
     return (
         <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd">
@@ -152,4 +169,4 @@ function CloseIcon() {
     )
 }
 
-export { SettingsIcon, CloseIcon, VartaIcon, AddIcon, ReloadIcon, WalletConnectIcon, GlobeIcon, PersonalIcon, ContactsIcon, SendIcon, MenuIcon, LoginIcon, ProfileIcon, DownArrowIcon, MetaMaskIcon }
+export { MoonIcon, SunIcon, SettingsIcon, CloseIcon, VartaIcon, AddIcon, ReloadIcon, WalletConnectIcon, GlobeIcon, PersonalIcon, ContactsIcon, SendIcon, MenuIcon, LoginIcon, ProfileIcon, DownArrowIcon, MetaMaskIcon }

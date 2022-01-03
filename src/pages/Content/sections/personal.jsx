@@ -6,7 +6,7 @@ import ThreadView from '../../../components/ThreadView';
 import TabShell from '../../../components/TabShell';
 import { Web3Context } from '../../../contexts/Web3Context';
 import { MultiValueInput, MultiValueAddressInput } from '../../../components/MultiValueInput';
-import Switch from '../../../components/ToggleSwitch';
+import Toggle from 'react-toggle';
 
 let ButtonStyled = styled.button`
     border-radius: 10px;
@@ -203,15 +203,17 @@ function Personal() {
                     <Flex flexDirection="row" alignItems="center">
                         <Flex flexDirection="row" width="50%" justifyContent="center" alignItems="center">
                             <span style={{ marginRight: "0px" }}>Read Public</span>
-                            <Switch id="isReadPublic"
-                                toggled={isReadPublic}
+                            <Toggle
+                                id="isReadPublic"
+                                defaultChecked={isReadPublic}
                                 onChange={(e) => setIsReadPublic(e.target.checked)}
                             />
                         </Flex>
                         <Flex flexDirection="row" width="50%" justifyContent="center" alignItems="center">
                             <span style={{ marginRight: "0px" }}>Write Public</span>
-                            <Switch id="isWritePublic"
-                                toggled={isWritePublic}
+                            <Toggle
+                                id="isWritePublic"
+                                defaultChecked={isWritePublic}
                                 onChange={(e) => setIsWritePublic(e.target.checked)}
                             />
                         </Flex>

@@ -19,12 +19,24 @@ const Flex = styled.div`
   backdrop-filter: ${props => props.backdropFilter};
 `
 
+const Text = styled.p`
+  ${space}
+  ${layout}
+  ${typography}
+  ${shadow}
+  ${typography}
+  ${position}
+  ${background}
+  ${border}
+  cursor: ${props => props.cursor};
+  color: ${props => Boolean(props.color) === true ? props.color : props.theme.colors.text};
+`
+
 const Button = styled.button`
   ${space}
   ${width}
   ${fontSize}
   ${color}
-  background-color: ${props => props.backgroundColor};
   ${zIndex}
   ${position}
   ${borderRadius}
@@ -36,6 +48,7 @@ const Button = styled.button`
   ${display}
   ${alignItems}
   ${justifyContent}
+  background-color: ${props => props.backgroundColor};
 `;
 
 const IconButton = styled.button`
@@ -64,4 +77,4 @@ const Input = styled.input`
     height: 30px;
 `;
 
-export { Flex, Button, IconButton, Input }
+export { Text, Flex, Button, IconButton, Input }

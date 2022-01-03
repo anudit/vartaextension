@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Button, Flex } from '../../components/Base';
 import '../../styles/react-tabs.css';
 import '../../styles/app.css';
+import '../../styles/react-toggle.css';
 import { SettingsIcon, GlobeIcon, PersonalIcon, LoginIcon, ProfileIcon, DownArrowIcon, VartaIcon } from '../../components/Icons';
 import Settings from './sections/Settings';
 import Personal from './sections/personal';
@@ -23,7 +24,7 @@ const ScrollButton = styled.button`
     border: none;
 `;
 
-function App({ setColorMode }) {
+function App({ setColorMode, colorMode }) {
 
     const { signerAddress } = useContext(Web3Context);
     const [isOpen, setIsOpen] = useState(false);
@@ -78,7 +79,7 @@ function App({ setColorMode }) {
                             <Login />
                         </TabPanel>
                         <TabPanel display="flex">
-                            <Settings />
+                            <Settings setColorMode={setColorMode} colorMode={colorMode} />
                         </TabPanel>
                     </Flex>
                     <Flex width="70px" backgroundColor="#ffffff42" display="flex" paddingTop="10px" borderTopRightRadius="5px" borderBottomRightRadius="5px" justifyContent="space-between" flexDirection="column" alignItems="center" paddingBottom="10px">

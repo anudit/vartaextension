@@ -64,7 +64,7 @@ const IconButton = styled.button`
 
 const NeuIconButton = styled(IconButton)`
     box-shadow: rgb(21, 21, 24) 11px 11px 22px 0px, rgb(36, 37, 41) -11px -11px 22px 0px;
-    background-color: rgb(26, 27, 30);
+    background-color: ${props => props.theme.colors.primary};
     &:hover {
         box-shadow: rgb(21, 21, 24) 24px 24px 48px 0px, rgb(36, 37, 41) -24px -24px 48px 0px;
     }

@@ -13,8 +13,8 @@ const baseTheme = {
 
 const colors = {
     light: {
-        bg: "#1a1a1a",
-        primary: "#1E2327",
+        bg: "#e9e9e9",
+        primary: "#efefef",
         secondary: "#202020",
         accent: "#735DB7",
         text: "black",
@@ -25,7 +25,7 @@ const colors = {
         primary: "#1E2327",
         secondary: "#202020",
         accent: "#735DB7",
-        text: "white",
+        text: "#ffffffd4",
         textDull: "gray",
     }
 }
@@ -46,7 +46,7 @@ function App() {
     return (
         <Web3ContextProvider>
             <ThemeProvider theme={themeValue}>
-                <ConvoApp setColorMode={setColorMode} />
+                <ConvoApp setColorMode={setColorMode} colorMode={mode} />
             </ThemeProvider>
         </Web3ContextProvider>
     )
