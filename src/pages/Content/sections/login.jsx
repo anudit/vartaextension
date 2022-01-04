@@ -96,7 +96,7 @@ function Login() {
                 <Text>Welcome, <b>{prettyName === "" ? truncateAddress(signerAddress) : prettyName}</b></Text>
                 <Text>TrustScore: {verified}</Text>
                 <br /><br />
-                <NeuButton onClick={disconnectWallet} minH="40px" p="10px 20px 10px 20px" >
+                <NeuButton variant="danger" onClick={disconnectWallet} minH="40px" p="10px 20px 10px 20px" >
                     Disconnect Wallet
                 </NeuButton>
             </TabShell>

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-import { shadow, position, border, background, typography, flexbox, layout, space, width, fontSize, color, justifyContent, alignItems, textAlign, zIndex, bottom, right, flexDirection, height, backgroundColor, borderRadius, padding, display, paddingTop, overflow } from 'styled-system'
+import { variant, shadow, position, border, background, typography, flexbox, layout, space, width, fontSize, color, justifyContent, alignItems, textAlign, zIndex, bottom, right, flexDirection, height, backgroundColor, borderRadius, padding, display, paddingTop, overflow } from 'styled-system'
 
 const Flex = styled.div`
   ${space}
@@ -63,8 +63,10 @@ const Input = styled.input`
 `;
 
 const IconButton = styled.button`
-    min-width: 40px !important;
+    width: 40px !important;
     height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
     display:flex;
     align-items: center;
     justify-content: center;
@@ -73,10 +75,10 @@ const IconButton = styled.button`
 `;
 
 const NeuIconButton = styled(IconButton)`
-    box-shadow: rgb(21, 21, 24) 11px 11px 22px 0px, rgb(36, 37, 41) -11px -11px 22px 0px;
-    background: linear-gradient(180deg , #332F2F, #221F1F);
+    box-shadow: ${props => `${props.theme.colors.primary} 4px 4px 22px 0px, ${props.theme.colors.primary} -4px -4px 22px 0px`};
+    background: ${props => props.isSelected === true ? props.theme.colors.accent : props.theme.colors.primaryG};
     &:hover {
-      box-shadow: rgb(21, 21, 24) 24px 24px 48px 0px, rgb(36, 37, 41) -24px -24px 48px 0px;
+      box-shadow: ${props => `${props.theme.colors.secondary} 24px 24px 48px 0px, ${props.theme.colors.secondary} -24px -24px 48px 0px`};
     }
     &:active {
       background: linear-gradient(145deg, #171717, #272727);
@@ -84,22 +86,41 @@ const NeuIconButton = styled(IconButton)`
     }
 `;
 
-const NeuButton = styled(Button)`
-    align-items: center;
-    justify-content: center;
-    display:flex;
-    border-radius: 100px;
-    box-shadow: rgb(21, 21, 24) 11px 11px 22px 0px, rgb(36, 37, 41) -11px -11px 22px 0px;
-    background: linear-gradient(180deg , #332F2F, #221F1F);
-    &:hover {
-      box-shadow: rgb(21, 21, 24) 24px 24px 48px 0px, rgb(36, 37, 41) -24px -24px 48px 0px;
-    };
-    &:active {
-      background: linear-gradient(145deg, #171717, #272727);
-      box-shadow: inset 30.03px 30.03px 100px #191919, inset -30.03px -30.03px 100px #252525;
-    };
-    border:none;
-    color: ${props => props.theme.colors.text};
-`;
+const NeuButton = styled(Button)(
+  {
+    alignItems: "center",
+    justifyContent: "center",
+    display: "flex",
+    borderRadius: "100px",
+    boxShadow: "rgb(21, 21, 24) 11px 11px 22px 0px, rgb(36, 37, 41) -11px -11px 22px 0px",
+    background: (props) => props.theme.colors.primaryG,
+    border: "none",
+    color: (props) => props.theme.colors.text,
+    "&:hover": {
+      boxShadow: "rgb(21, 21, 24) 24px 24px 48px 0px, rgb(36, 37, 41) -24px -24px 48px 0px",
+    },
+    "&:active": {
+      background: "linear-gradient(145deg, #171717, #272727)",
+      boxShadow: "inset 30.03px 30.03px 100px #191919, inset -30.03px -30.03px 100px #252525"
+    }
+  },
+  variant({
+    variants: {
+      accent: {
+        background: (props) => props.theme.colors.accent,
+      },
+      danger: {
+        color: "white",
+        boxShadow: "rgb(180 91 104) 3px 3px 12px 0px, rgb(186 90 103) -1px -1px 22px 0px",
+        background: "linear-gradient(180deg, #ed213a, #93291e)",
+      },
+      success: {
+        color: "white",
+        boxShadow: "rgb(180 91 104) 3px 3px 12px 0px, rgb(186 90 103) -1px -1px 22px 0px",
+        background: "linear-gradient(180deg, #56ab2f, #a8e063)",
+      },
+    }
+  })
+);
 
 export { Text, Flex, Button, IconButton, NeuIconButton, NeuButton, Input }

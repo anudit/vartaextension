@@ -134,7 +134,7 @@ function PublicTab({ setTabIndex }) {
     if (comments === undefined) {
         return (
             <TabShell>
-                <Flex width="100%" display="flex" justifyContent="center">
+                <Flex width="100%" height="450px" display="flex" justifyContent="center" alignContent="center">
                     <div className="loader"></div>
                 </Flex>
             </TabShell>

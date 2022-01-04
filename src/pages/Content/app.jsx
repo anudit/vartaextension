@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { Button, Flex } from '../../components/Base';
+import { NeuIconButton, Button, Flex } from '../../components/Base';
 import '../../styles/react-tabs.css';
 import '../../styles/app.css';
 import '../../styles/react-toggle.css';
@@ -83,20 +83,28 @@ function App({ setColorMode, colorMode }) {
                             <Settings setColorMode={setColorMode} colorMode={colorMode} />
                         </TabPanel>
                     </Flex>
-                    <Flex width="70px" backgroundColor="#ffffff42" display="flex" paddingTop="10px" borderTopRightRadius="5px" borderBottomRightRadius="5px" justifyContent="space-between" flexDirection="column" alignItems="center" paddingBottom="10px">
+                    <Flex width="70px" backgroundColor={theme.colors.primary} display="flex" paddingTop="10px" borderTopRightRadius="5px" borderBottomRightRadius="5px" justifyContent="space-between" flexDirection="column" alignItems="center" paddingBottom="10px">
                         <Flex>
                             <TabList>
                                 <Tab>
-                                    <GlobeIcon />
+                                    <NeuIconButton isSelected={tabIndex === 0}>
+                                        <GlobeIcon height="20px" width="20px" />
+                                    </NeuIconButton>
                                 </Tab>
                                 <Tab>
-                                    <PersonalIcon />
+                                    <NeuIconButton isSelected={tabIndex === 1}>
+                                        <PersonalIcon height="20px" width="20px" />
+                                    </NeuIconButton>
                                 </Tab>
                                 <Tab>
-                                    {signerAddress === "" ? <LoginIcon /> : <ProfileIcon />}
+                                    <NeuIconButton isSelected={tabIndex === 2}>
+                                        {signerAddress === "" ? <LoginIcon height="20px" width="20px" /> : <ProfileIcon height="20px" width="20px" />}
+                                    </NeuIconButton>
                                 </Tab>
                                 <Tab>
-                                    <SettingsIcon />
+                                    <NeuIconButton isSelected={tabIndex === 3}>
+                                        <SettingsIcon height="20px" width="20px" />
+                                    </NeuIconButton>
                                 </Tab>
                             </TabList>
                         </Flex>
