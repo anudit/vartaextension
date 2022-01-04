@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Flex } from '../../../components/Base';
+import { NeuButton, Flex, Text } from '../../../components/Base';
 import { MetaMaskIcon, WalletConnectIcon } from '../../../components/Icons';
 import TabShell from '../../../components/TabShell';
 import { Web3Context } from '../../../contexts/Web3Context';
@@ -30,6 +30,25 @@ let Avatar = styled.img`
     height: ${props => Boolean(props.height) === true ? props.height : ""};
     margin-bottom: ${props => Boolean(props.mb) === true ? props.mb : ""};
 `;
+
+// let NeuButton = styled(Button)`
+//     outline: none;
+//     border: none;
+//     border-radius: 10px;
+//     padding: 8px;
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-evenly;
+//     align-items: center;
+//     cursor: pointer;
+//     color: ${props => props.theme.colors.text};
+//     background-color: #363a3b;
+//     box-shadow: 5px 5px 10px rgb(25 25 25 / 60%), -5px -5px 10px rgb(245 245 245 / 8%);
+//     &:active {
+//         box-shadow: inset 2px 2px 10px rgb(25 25 25 / 60%), inset -2px -2px 10px rgb(245 245 245 / 10%), 5px 5px 10px rgb(25 25 25 / 60%), -5px -5px 10px rgb(245 245 245 / 8%);
+//     }
+// `;
+
 
 
 function Login() {
@@ -74,13 +93,12 @@ function Login() {
                     height="100px"
                 />
                 <br />
-                Welcome, <b>{prettyName === "" ? truncateAddress(signerAddress) : prettyName}</b>
-                <br />
-                TrustScore: {verified}
+                <Text>Welcome, <b>{prettyName === "" ? truncateAddress(signerAddress) : prettyName}</b></Text>
+                <Text>TrustScore: {verified}</Text>
                 <br /><br />
-                <WalletItem onClick={disconnectWallet} minH="40px" backgroundImage="linear-gradient(163deg, rgb(255 0 0) -258.34%, rgb(238 120 98 / 18%) 100.95%);">
+                <NeuButton onClick={disconnectWallet} minH="40px" p="10px 20px 10px 20px" >
                     Disconnect Wallet
-                </WalletItem>
+                </NeuButton>
             </TabShell>
         );
     }

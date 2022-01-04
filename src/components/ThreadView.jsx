@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import { Flex, IconButton } from './Base';
+import { Flex, Text, NeuIconButton } from './Base';
 import { MenuIcon, SendIcon } from './Icons';
 import styled from 'styled-components';
 import MessagesRenderer from './MessagesRenderer';
@@ -46,20 +46,20 @@ function ThreadView(props) {
 
     return (
         <Flex display="flex" flexDirection="column" height="500px">
-            <p style={{ margin: 0 }}>
+            <Text style={{ margin: 0 }}>
                 {decodeURIComponent(props.screenData.title)}
-            </p>
+            </Text>
             <Flex height="400px" display="flex" flexDirection="column" overflowY="scroll" overflowX="hidden" className="custom-scroll" id="commentsBox" >
                 <MessagesRenderer comments={comments} />
             </Flex>
             <Flex height="50px" display="flex" flexDirection="row">
-                <IconButton>
-                    <MenuIcon />
-                </IconButton>
+                <NeuIconButton>
+                    <MenuIcon width="40px" height="40px" />
+                </NeuIconButton>
                 <MessageBox type="text" ref={newMessageRef} />
-                <IconButton onClick={createNewMessage}>
-                    <SendIcon />
-                </IconButton>
+                <NeuIconButton onClick={createNewMessage}>
+                    <SendIcon width="20px" height="20px" />
+                </NeuIconButton>
             </Flex>
         </Flex>
     );

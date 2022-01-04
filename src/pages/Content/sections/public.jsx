@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import styled from 'styled-components';
-import { Flex } from '../../../components/Base';
+import { Flex, NeuIconButton } from '../../../components/Base';
 import { MenuIcon, SendIcon } from '../../../components/Icons';
 import { Web3Context } from '../../../contexts/Web3Context';
 import TabShell from '../../../components/TabShell';
@@ -49,28 +49,6 @@ const MessageBox = styled.input`
     border: none;
     height: 40px;
     color: text;
-`;
-
-const IconButton = styled.button`
-    min-width: 40px !important;
-    height: 40px !important;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 100px;
-    border:none;
-    padding:8px;
-`;
-
-const NeuIconButton = styled(IconButton)`
-    box-shadow: rgb(21, 21, 24) 11px 11px 22px 0px, rgb(36, 37, 41) -11px -11px 22px 0px;
-    background-color: ${props => props.theme.colors.primary};
-    &:hover {
-        box-shadow: rgb(21, 21, 24) 24px 24px 48px 0px, rgb(36, 37, 41) -24px -24px 48px 0px;
-    }
-    &:active {
-        box-shadow: rgb(21, 21, 24) 24px 24px 48px 0px inset, rgb(36, 37, 41) -24px -24px 48px 0px inset;
-    }
 `;
 
 const LoginButton = styled.button`
@@ -154,7 +132,13 @@ function PublicTab({ setTabIndex }) {
     }
 
     if (comments === undefined) {
-        return (<TabShell> loading </TabShell>);
+        return (
+            <TabShell>
+                <Flex width="100%" display="flex" justifyContent="center">
+                    <div className="loader"></div>
+                </Flex>
+            </TabShell>
+        );
     }
     else if (Boolean(comments) === true && comments.length === 0 && Boolean(comments.map) === false) {
         return (<TabShell> No comments </TabShell>);
@@ -167,13 +151,13 @@ function PublicTab({ setTabIndex }) {
                 </Flex>
                 {
                     signerAddress !== "" ? (
-                        <Flex px={2} height="50px" display="flex" flexDirection="row" alignItems="center">
-                            <NeuIconButton >
-                                <MenuIcon />
+                        <Flex height="50px" display="flex" flexDirection="row" alignItems="center">
+                            <NeuIconButton>
+                                <MenuIcon width="30px" height="30px" />
                             </NeuIconButton>
                             <MessageBox type="text" ref={newMessageRef} />
                             <NeuIconButton onClick={sendMessage}>
-                                <SendIcon />
+                                <SendIcon width="15px" height="15px" />
                             </NeuIconButton>
                         </Flex>
                     ) : (

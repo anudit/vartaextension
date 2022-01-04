@@ -10,7 +10,7 @@ import Personal from './sections/personal';
 import Public from './sections/public';
 import Login from './sections/login';
 import { Web3Context } from '../../contexts/Web3Context';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const ScrollButton = styled.button`
     border-radius: 100px;
@@ -27,6 +27,7 @@ const ScrollButton = styled.button`
 function App({ setColorMode, colorMode }) {
 
     const { signerAddress } = useContext(Web3Context);
+    const theme = useTheme();
     const [isOpen, setIsOpen] = useState(false);
     const [tabIndex, setTabIndex] = useState(0);
 
@@ -56,7 +57,7 @@ function App({ setColorMode, colorMode }) {
                 justifyContent="center"
                 textAlign="center"
                 zIndex="1000000"
-                backgroundColor="bg"
+                background={theme.colors.bg}
                 backdropFilter="blur(10px)"
                 position="fixed"
                 right="10px"

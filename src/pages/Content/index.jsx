@@ -21,7 +21,7 @@ const colors = {
         textDull: "gray",
     },
     dark: {
-        bg: "#1a1a1a",
+        bg: "linear-gradient(180deg, #25292e, #16171B)",
         primary: "#1E2327",
         secondary: "#202020",
         accent: "#735DB7",

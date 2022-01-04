@@ -15,7 +15,7 @@ const MessageAuthor = styled.p`
 `;
 
 const MessageText = styled.p`
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: 600;
   padding-bottom: 0px;
   padding-top: 0px;
@@ -60,7 +60,7 @@ function MessagesRenderer({ comments }) {
         return comments.map(comment => {
             return (
                 <MessageRow type={comment.author === signerAddress ? 1 : 0} key={comment._id} display="flex" flexDirection="column">
-                    <Flex display="flex" flexDirection="row" justifyContent="space-between" width="70%">
+                    <Flex display="flex" flexDirection="row" justifyContent="space-between" width="70%" px="5px">
                         <MessageAuthor>
                             {Boolean(comment.authorENS) === true ? comment.authorENS : truncateAddress(comment.author)}
                         </MessageAuthor>

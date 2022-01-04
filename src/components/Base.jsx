@@ -51,21 +51,6 @@ const Button = styled.button`
   background-color: ${props => props.backgroundColor};
 `;
 
-const IconButton = styled.button`
-    ${space}
-    width: ${props => (props.size === "sm" ? "54" : "50")}px !important;
-    height: ${props => (props.size === "sm" ? "40" : "50")}px !important;
-    display:flex;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border-radius: 100px;
-    filter: ${props => (Boolean(props.filter) === true ? props.filter : "")};
-    border:none;
-    padding: ${props => (props.size === "sm" ? "4" : "8")}px !important;
-`;
-
 const Input = styled.input`
     ${space}
     width: ${props => Boolean(props.width) === true ? props.width : "100%"};
@@ -77,4 +62,44 @@ const Input = styled.input`
     height: 30px;
 `;
 
-export { Text, Flex, Button, IconButton, Input }
+const IconButton = styled.button`
+    min-width: 40px !important;
+    height: 40px !important;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+    border:none;
+`;
+
+const NeuIconButton = styled(IconButton)`
+    box-shadow: rgb(21, 21, 24) 11px 11px 22px 0px, rgb(36, 37, 41) -11px -11px 22px 0px;
+    background: linear-gradient(180deg , #332F2F, #221F1F);
+    &:hover {
+      box-shadow: rgb(21, 21, 24) 24px 24px 48px 0px, rgb(36, 37, 41) -24px -24px 48px 0px;
+    }
+    &:active {
+      background: linear-gradient(145deg, #171717, #272727);
+      box-shadow: inset 30.03px 30.03px 100px #191919, inset -30.03px -30.03px 100px #252525;
+    }
+`;
+
+const NeuButton = styled(Button)`
+    align-items: center;
+    justify-content: center;
+    display:flex;
+    border-radius: 100px;
+    box-shadow: rgb(21, 21, 24) 11px 11px 22px 0px, rgb(36, 37, 41) -11px -11px 22px 0px;
+    background: linear-gradient(180deg , #332F2F, #221F1F);
+    &:hover {
+      box-shadow: rgb(21, 21, 24) 24px 24px 48px 0px, rgb(36, 37, 41) -24px -24px 48px 0px;
+    };
+    &:active {
+      background: linear-gradient(145deg, #171717, #272727);
+      box-shadow: inset 30.03px 30.03px 100px #191919, inset -30.03px -30.03px 100px #252525;
+    };
+    border:none;
+    color: ${props => props.theme.colors.text};
+`;
+
+export { Text, Flex, Button, IconButton, NeuIconButton, NeuButton, Input }

@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { Flex, IconButton, Input } from '../../../components/Base';
+import { Text, Flex, NeuIconButton, Input } from '../../../components/Base';
 import { AddIcon, ReloadIcon } from '../../../components/Icons';
 import ThreadView from '../../../components/ThreadView';
 import TabShell from '../../../components/TabShell';
@@ -97,15 +97,15 @@ function Personal() {
             <TabShell>
                 <Flex flexDirection="row" marginTop="5px" marginBottom="5px">
                     <br />
-                    <IconButton onClick={() => { setActiveScreen('create') }} size="sm">
-                        <AddIcon />
-                    </IconButton>
+                    <NeuIconButton onClick={() => { setActiveScreen('create') }} size="sm">
+                        <AddIcon width="15px" height="15px" />
+                    </NeuIconButton>
                     <Input width="100%" ref={searchInput} onChange={() => {
                         setSearchString(searchInput.current.value);
                     }} />
-                    <IconButton onClick={() => { refreshThreads() }} size="sm">
-                        <ReloadIcon />
-                    </IconButton>
+                    <NeuIconButton onClick={() => { refreshThreads() }} size="sm">
+                        <ReloadIcon width="15px" height="15px" />
+                    </NeuIconButton>
                 </Flex>
                 {
                     Boolean(threads) === false && (
@@ -173,36 +173,36 @@ function Personal() {
 
                 <Flex flexDirection="column" margin="10px">
                     <Flex flexDirection="row" textAlign="center" marginBottom="4px" justifyContent="space-between">
-                        <p onClick={() => { setActiveScreen('home') }} style={{ margin: "0px" }}>Back</p>
-                        <p style={{ margin: "0px" }}>Create a New Thread</p>
-                        <p style={{ margin: "0px", visibility: "hidden" }}>Nodisp</p>
+                        <Text onClick={() => { setActiveScreen('home') }} style={{ margin: "0px" }}>Back</Text>
+                        <Text style={{ margin: "0px" }}>Create a New Thread</Text>
+                        <Text style={{ margin: "0px", visibility: "hidden" }}>Nodisp</Text>
                     </Flex>
                     <br />
                     <Flex flexDirection="column" textAlign="left" marginBottom="4px">
-                        <p style={{ margin: "0px" }}>Title</p>
+                        <Text style={{ margin: "0px" }}>Title</Text>
                         <Input defaultValue="Title" ref={inputTitleRef} />
                     </Flex>
                     <Flex flexDirection="column" textAlign="left" marginBottom="4px">
-                        <p style={{ margin: "0px" }}>Description</p>
+                        <Text style={{ margin: "0px" }}>Description</Text>
                         <Input defaultValue="Desc" ref={inputDescriptionRef} />
                     </Flex>
                     <Flex flexDirection="column" textAlign="left" marginBottom="4px">
-                        <p style={{ margin: "0px" }}>Members</p>
+                        <Text style={{ margin: "0px" }}>Members</Text>
                         <MultiValueAddressInput inputRef={inputMembersRef} />
                     </Flex>
                     <Flex flexDirection="column" textAlign="left" marginBottom="4px">
-                        <p style={{ margin: "0px" }}>Moderators</p>
+                        <Text style={{ margin: "0px" }}>Moderators</Text>
                         <MultiValueAddressInput inputRef={inputModeratorsRef} />
                         {/* <Input defaultValue="0x707aC3937A9B31C225D8C240F5917Be97cab9F20" /> */}
                     </Flex>
                     <Flex flexDirection="column" textAlign="left" marginBottom="4px">
-                        <p style={{ margin: "0px" }}>Keywords</p>
+                        <Text style={{ margin: "0px" }}>Keywords</Text>
                         <MultiValueInput inputRef={inputKeywordsRef} />
                     </Flex>
                     <br />
                     <Flex flexDirection="row" alignItems="center">
                         <Flex flexDirection="row" width="50%" justifyContent="center" alignItems="center">
-                            <span style={{ marginRight: "0px" }}>Read Public</span>
+                            <Text style={{ marginRight: "0px" }}>Read Public</Text>
                             <Toggle
                                 id="isReadPublic"
                                 defaultChecked={isReadPublic}
@@ -210,7 +210,7 @@ function Personal() {
                             />
                         </Flex>
                         <Flex flexDirection="row" width="50%" justifyContent="center" alignItems="center">
-                            <span style={{ marginRight: "0px" }}>Write Public</span>
+                            <Text style={{ marginRight: "0px" }}>Write Public</Text>
                             <Toggle
                                 id="isWritePublic"
                                 defaultChecked={isWritePublic}

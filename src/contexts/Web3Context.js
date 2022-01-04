@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { ethers } from "ethers";
-import Cookies from "js-cookie";
 import { Convo } from '@theconvospace/sdk';
 import Torus from "@toruslabs/torus-embed";
 import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -27,10 +26,6 @@ export const Web3ContextProvider = ({ children }) => {
         logger: log,
         shouldShimWeb3: true,
     });
-
-    const cookies = Cookies.withAttributes({
-        path: '/'
-    })
 
     const [provider, setProvider] = useState(undefined);
     const [connectedChain, setConnectedChain] = useState("");
@@ -214,8 +209,6 @@ export const Web3ContextProvider = ({ children }) => {
             choiceCookie: false,
             accounts: [],
         })
-        cookies.remove('CONVO_SESSION');
-        cookies.remove('CONVO_LAST_CONNECTED_CHOICE');
         setProvider(undefined);
         setConnectedChain("");
         setSignerAddress("");
