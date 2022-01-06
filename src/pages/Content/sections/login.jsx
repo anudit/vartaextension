@@ -111,24 +111,24 @@ function Login() {
                         <>
                             <WalletItem onClick={() => { connectWallet('injected') }} backgroundImage="linear-gradient(229.83deg, rgb(205 131 59) -258.34%, rgb(205 189 178 / 18%) 100.95%)">
                                 <MetaMaskIcon />
-                                <p>Sign-in with <br />Metamask</p>
+                                <Text>Sign-in with <br />Metamask</Text>
                             </WalletItem>
                             <WalletItem onClick={() => { connectWallet('walletconnect') }} backgroundImage="linear-gradient(229.83deg, rgb(59 153 252) -258.34%, rgb(82 153 231 / 18%) 100.95%)" >
                                 <WalletConnectIcon />
-                                <p>Sign-in with <br />WalletConnect</p>
+                                <Text>Sign-in with <br />WalletConnect</Text>
                             </WalletItem>
                             <WalletItem onClick={() => { connectWallet('torus') }}>
-                                <p>Sign-in with Email</p>
+                                <Text>Sign-in with Email</Text>
                             </WalletItem>
                         </>
                     )
                 }
                 {
                     connectingState === 'PLEASE_SIGN_MESSAGE' && (
-                        <Flex width="100%" display="flex" alignItems="center" flexDirection="column">
+                        <Flex width="100%" height="100%" display="flex" alignItems="center" flexDirection="column">
                             <div className="loader"></div>
                             <br />
-                            <p>Please sign the message in your wallet. <br />This is not a transaction.</p>
+                            <Text>Please sign the message in your wallet. <br /> ℹ️ This is not a transaction.</Text>
                         </Flex>
                     )
                 }

@@ -67,17 +67,18 @@ function LoginIcon({ width, height }) {
     const theme = useTheme();
     return (
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 551.13 551.13" height={height} width={width}>
-            <g>
-                <path fill={theme.colors.text} d="m499.462 0h-378.902c-9.52 0-17.223 7.703-17.223 17.223v51.668h34.446v-34.445h344.456v482.239h-344.456v-34.446h-34.446v51.668c0 9.52 7.703 17.223 17.223 17.223h378.902c9.52 0 17.223-7.703 17.223-17.223v-516.684c0-9.52-7.704-17.223-17.223-17.223z" fill="#000000"></path>
-                <path fill={theme.colors.text} d="m204.588 366.725 24.354 24.354 115.514-115.514-115.514-115.514-24.354 24.354 73.937 73.937h-244.079v34.446h244.08z" fill="#000000"></path>
-            </g>
+            <path fill={theme.colors.text} d="m499.462 0h-378.902c-9.52 0-17.223 7.703-17.223 17.223v51.668h34.446v-34.445h344.456v482.239h-344.456v-34.446h-34.446v51.668c0 9.52 7.703 17.223 17.223 17.223h378.902c9.52 0 17.223-7.703 17.223-17.223v-516.684c0-9.52-7.704-17.223-17.223-17.223z"></path>
+            <path fill={theme.colors.text} d="m204.588 366.725 24.354 24.354 115.514-115.514-115.514-115.514-24.354 24.354 73.937 73.937h-244.079v34.446h244.08z"></path>
         </svg>
     )
 }
 
-function DownArrowIcon() {
+function DownArrowIcon({ width, height }) {
+    const theme = useTheme();
     return (
-        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd"><path d="M23.245 4l-11.245 14.374-11.219-14.374-.781.619 12 15.381 12-15.391-.755-.609z" /></svg>
+        <svg height={height} width={width} xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd">
+            <path fill={theme.colors.text} d="M23.245 4l-11.245 14.374-11.219-14.374-.781.619 12 15.381 12-15.391-.755-.609z" />
+        </svg>
     )
 }
 

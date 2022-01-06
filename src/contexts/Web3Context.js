@@ -23,7 +23,9 @@ export const Web3ContextProvider = ({ children }) => {
     // this will initialize the provider and set it as window.ethereum
     let ethereumProvider = initializeProvider({
         connectionStream: metamaskStream,
+        jsonRpcStreamName: 'metamask-provider',
         logger: log,
+        shouldSetOnWindow: true,
         shouldShimWeb3: true,
     });
 
@@ -129,7 +131,7 @@ export const Web3ContextProvider = ({ children }) => {
                 }
                 else if (choice === "injected") {
 
-                    console.log('ethereumProvider', window.ethereum);
+                    console.log('ethereumProvider', ethereumProvider);
 
 
                     accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
@@ -213,7 +215,7 @@ export const Web3ContextProvider = ({ children }) => {
         setConnectedChain("");
         setSignerAddress("");
         setPrettyName("");
-        setConnectingState("");
+        setConnectingState("LOGIN");
     }
 
     async function getAuthToken(manualAddress = undefined) {

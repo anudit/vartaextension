@@ -86,10 +86,12 @@ function Personal() {
     }
 
     if (signerAddress === "") {
-        return (<TabShell>
-            <br />
-            Login to view Private Threads.
-        </TabShell>)
+        return (
+            <TabShell>
+                <br />
+                <Text>Login to view Private Threads.</Text>
+            </TabShell>
+        )
     }
     else if (activeScreen === 'home') {
 

@@ -110,7 +110,7 @@ function App({ setColorMode, colorMode }) {
                         </Flex>
                         <Flex flexDirection="column">
                             <ScrollButton onClick={scrollDown}>
-                                <DownArrowIcon />
+                                <DownArrowIcon height="24px" width="24px" />
                             </ScrollButton>
                             <Button border="none" backgroundColor="#ffffff70" onClick={() => { setIsOpen(!isOpen) }} borderRadius="100px" height="50px" width="50px" padding={1}>
                                 <VartaIcon />

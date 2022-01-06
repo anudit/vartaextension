@@ -35,7 +35,6 @@ const colors = {
 function getTheme(mode) {
     let finalTheme = baseTheme;
     finalTheme['colors'] = colors[mode];
-    console.log('finalTheme', finalTheme)
     return finalTheme;
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import styled from 'styled-components';
-import { Flex, NeuIconButton } from '../../../components/Base';
+import { Flex, NeuButton, NeuIconButton } from '../../../components/Base';
 import { MenuIcon, SendIcon } from '../../../components/Icons';
 import { Web3Context } from '../../../contexts/Web3Context';
 import TabShell from '../../../components/TabShell';
@@ -162,9 +162,9 @@ function PublicTab({ setTabIndex }) {
                         </Flex>
                     ) : (
                         <Flex height="50px" display="flex" flexDirection="row" >
-                            <LoginButton onClick={() => { setTabIndex(2) }}>
+                            <NeuButton onClick={() => { setTabIndex(2) }} width="100%" m="5px">
                                 Login
-                            </LoginButton>
+                            </NeuButton>
                         </Flex>
                     )
                 }

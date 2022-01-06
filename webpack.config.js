@@ -91,7 +91,11 @@ var options = {
             loader: 'source-map-loader',
           },
           {
-            loader: 'babel-loader',
+            loader: 'esbuild-loader',
+            options: {
+              loader: 'jsx',
+              target: 'es2015'
+            }
           },
         ],
         exclude: /node_modules/,
