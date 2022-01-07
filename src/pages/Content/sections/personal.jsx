@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { Text, Flex, NeuIconButton, Input } from '../../../components/Base';
+import { Text, Flex, NeuIconButton, NeuInput } from '../../../components/Base';
 import { AddIcon, ReloadIcon } from '../../../components/Icons';
 import ThreadView from '../../../components/ThreadView';
 import TabShell from '../../../components/TabShell';
@@ -8,22 +8,22 @@ import { Web3Context } from '../../../contexts/Web3Context';
 import { MultiValueInput, MultiValueAddressInput } from '../../../components/MultiValueInput';
 import Toggle from 'react-toggle';
 
-let ButtonStyled = styled.button`
-    border-radius: 10px;
-    width: ${props => Boolean(props.width) === true ? props.width : ""};
-    border: none;
-    margin-bottom:10px;
-    padding: 8px;
-    background-image: ${props => Boolean(props.backgroundImage) === true ? props.backgroundImage : ""};
-    background: ${props => Boolean(props.background) === true ? props.background : ""};
-    flex-direction:row;
-    min-height: ${props => Boolean(props.minH) === true ? props.minH : "50px"};
-    font-weight: 700;
-    display: flex;
-    justify-content: space-evenly;
-    align-items:center;
-    cursor:pointer;
-`;
+let ButtonStyled = styled.button({
+    borderRadius: "10px",
+    width: props => Boolean(props.width) === true ? props.width : "",
+    border: "none",
+    marginBottom: "10px",
+    padding: "8px",
+    backgroundImage: props => Boolean(props.backgroundImage) === true ? props.backgroundImage : "",
+    background: props => Boolean(props.background) === true ? props.background : "",
+    flexDirection: "row",
+    minHeight: props => Boolean(props.minH) === true ? props.minH : "50px",
+    fontWeight: 700,
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    cursor: "pointer",
+});
 
 function Personal() {
 
@@ -102,7 +102,7 @@ function Personal() {
                     <NeuIconButton onClick={() => { setActiveScreen('create') }} size="sm">
                         <AddIcon width="15px" height="15px" />
                     </NeuIconButton>
-                    <Input width="100%" ref={searchInput} onChange={() => {
+                    <NeuInput margin="4px" height="40px" ref={searchInput} onChange={() => {
                         setSearchString(searchInput.current.value);
                     }} />
                     <NeuIconButton onClick={() => { refreshThreads() }} size="sm">
@@ -118,7 +118,7 @@ function Personal() {
                 }
                 {
                     Boolean(threads) === true && threads.length <= 0 && (
-                        <p>No threads.</p>
+                        <Text>No threads.</Text>
                     )
                 }
                 {
@@ -146,7 +146,7 @@ function Personal() {
                                             setscreenData(t);
                                         }}
                                     >
-                                        {decodeURIComponent(t.title)}
+                                        <Text>{decodeURIComponent(t.title)}</Text>
                                     </Flex>
                                 )
                             })
@@ -162,7 +162,7 @@ function Personal() {
         return (
             <TabShell>
                 <Flex flexDirection="row">
-                    <p style={{ margin: 0 }} onClick={() => { setActiveScreen('home') }}>Back</p>
+                    <Text style={{ margin: 0 }} onClick={() => { setActiveScreen('home') }}>Back</Text>
                 </Flex>
                 <ThreadView screenData={screenData} />
             </TabShell>
@@ -182,11 +182,11 @@ function Personal() {
                     <br />
                     <Flex flexDirection="column" textAlign="left" marginBottom="4px">
                         <Text style={{ margin: "0px" }}>Title</Text>
-                        <Input defaultValue="Title" ref={inputTitleRef} />
+                        <NeuInput defaultValue="Title" ref={inputTitleRef} />
                     </Flex>
                     <Flex flexDirection="column" textAlign="left" marginBottom="4px">
                         <Text style={{ margin: "0px" }}>Description</Text>
-                        <Input defaultValue="Desc" ref={inputDescriptionRef} />
+                        <NeuInput defaultValue="Desc" ref={inputDescriptionRef} />
                     </Flex>
                     <Flex flexDirection="column" textAlign="left" marginBottom="4px">
                         <Text style={{ margin: "0px" }}>Members</Text>
@@ -234,9 +234,9 @@ function Personal() {
     else {
 
         return (
-            <p>
+            <Text>
                 Personal Meesages
-            </p>
+            </Text>
         );
 
     }

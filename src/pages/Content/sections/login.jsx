@@ -8,48 +8,28 @@ import { addressToChainName, truncateAddress } from '../../../utils/stringUtils'
 import getAvatar from '../../../utils/avatar';
 import { ethers } from 'ethers';
 
-let WalletItem = styled(Flex)`
-    border-radius: 10px;
-    width: 70%;
-    margin-bottom:10px;
-    padding: 8px;
-    background-image: ${props => Boolean(props.backgroundImage) === true ? props.backgroundImage : ""};
-    flex-direction:row;
-    min-height: ${props => Boolean(props.minH) === true ? props.minH : "50px"};
-    font-weight: 700;
-    display: flex;
-    justify-content: space-evenly;
-    align-items:center;
-    cursor:pointer;
-`;
+let WalletItem = styled(Flex)({
+    borderRadius: "10px",
+    width: "70%",
+    marginBottom: "10px",
+    padding: "8px",
+    backgroundImage: props => Boolean(props.backgroundImage) === true ? props.backgroundImage : "";
+    flexDirection: "row",
+    minHeight: props => Boolean(props.minH) === true ? props.minH : "50px";
+    fontWeight: 700,
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    cursor: "pointer",
+});
 
-let Avatar = styled.img`
-    border-radius: 200px;
-    background:"#ffffff00";
-    width: ${props => Boolean(props.width) === true ? props.width : ""};
-    height: ${props => Boolean(props.height) === true ? props.height : ""};
-    margin-bottom: ${props => Boolean(props.mb) === true ? props.mb : ""};
-`;
-
-// let NeuButton = styled(Button)`
-//     outline: none;
-//     border: none;
-//     border-radius: 10px;
-//     padding: 8px;
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: space-evenly;
-//     align-items: center;
-//     cursor: pointer;
-//     color: ${props => props.theme.colors.text};
-//     background-color: #363a3b;
-//     box-shadow: 5px 5px 10px rgb(25 25 25 / 60%), -5px -5px 10px rgb(245 245 245 / 8%);
-//     &:active {
-//         box-shadow: inset 2px 2px 10px rgb(25 25 25 / 60%), inset -2px -2px 10px rgb(245 245 245 / 10%), 5px 5px 10px rgb(25 25 25 / 60%), -5px -5px 10px rgb(245 245 245 / 8%);
-//     }
-// `;
-
-
+let Avatar = styled.img({
+    borderRadius: "200px",
+    background: "#ffffff00",
+    width: props => Boolean(props.width) === true ? props.width : "",
+    height: props => Boolean(props.height) === true ? props.height : "",
+    marginBottom: props => Boolean(props.mb) === true ? props.mb : "",
+});
 
 function Login() {
 

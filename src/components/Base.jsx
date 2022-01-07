@@ -30,6 +30,7 @@ const Text = styled.p`
   ${border}
   cursor: ${props => props.cursor};
   color: ${props => Boolean(props.color) === true ? props.color : props.theme.colors.text};
+  margin: 0px;
 `
 
 const Button = styled.button`
@@ -62,29 +63,37 @@ const Input = styled.input`
     height: 30px;
 `;
 
-const IconButton = styled.button`
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 100px;
-    border:none;
-`;
+const IconButton = styled.button({
+  width: "40px !important",
+  height: "40px !important",
+  minWidth: "40px !important",
+  minHeight: "40px !important",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: "100px",
+  border: "none"
+});
 
-const NeuIconButton = styled(IconButton)`
-    box-shadow: ${props => `${props.theme.colors.primary} 4px 4px 22px 0px, ${props.theme.colors.primary} -4px -4px 22px 0px`};
-    background: ${props => props.isSelected === true ? props.theme.colors.accent : props.theme.colors.primaryG};
-    &:hover {
-      box-shadow: ${props => `${props.theme.colors.secondary} 24px 24px 48px 0px, ${props.theme.colors.secondary} -24px -24px 48px 0px`};
+const NeuInput = styled.input({
+  color: (props) => props.theme.colors.text,
+  backgroundColor: "#353636",
+  boxShadow: "inset 2px -10px 13px rgb(0 0 0 / 15%), inset 0px 12px 45px rgb(0 0 0 / 21%)",
+  width: "100%",
+  borderRadius: "5px",
+  border: "none"
+})
+
+const NeuIconButton = styled(IconButton)(
+  {
+    boxShadow: (props) => `${props.theme.colors.primary} 4px 4px 22px 0px, ${props.theme.colors.primary} -4px -4px 22px 0px`,
+    background: (props) => props.isSelected === true ? props.theme.colors.accent : props.theme.colors.secondary,
+    "&:active": {
+      background: "linear-gradient(145deg, #171717, #272727)",
+      boxShadow: "inset 30.03px 30.03px 100px #191919, inset -30.03px -30.03px 100px #252525",
     }
-    &:active {
-      background: linear-gradient(145deg, #171717, #272727);
-      box-shadow: inset 30.03px 30.03px 100px #191919, inset -30.03px -30.03px 100px #252525;
-    }
-`;
+  }
+);
 
 const NeuButton = styled(Button)(
   {
@@ -123,4 +132,4 @@ const NeuButton = styled(Button)(
   })
 );
 
-export { Text, Flex, Button, IconButton, NeuIconButton, NeuButton, Input }
+export { Text, Flex, Button, IconButton, NeuIconButton, NeuButton, Input, NeuInput }

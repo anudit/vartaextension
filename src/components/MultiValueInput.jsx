@@ -5,55 +5,55 @@ import styled from 'styled-components';
 import { ensToAddress, isBlockchainAddress, truncateAddress } from '../utils/stringUtils';
 import { CloseIcon } from './Icons';
 
-const Container = styled.div`
-  font-family: 'Arial';
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 3px;
-  border-radius: 5px;
-  background-color: white;
-  margin-top: 2px;
-  ${(props) => (props.isError ? 'border-color:red' : '')};
-`;
+const Container = styled.div({
+    fontFamily: 'Arial',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "3px",
+    borderRadius: "5px",
+    backgroundColor: "white",
+    marginTop: "2px",
+    borderColor: (props) => props.isError ? 'red' : '',
+});
 
-const InputContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex: 1 0;
-  align-items: center;
-  min-width: 0;
-`;
+const InputContainer = styled.div({
+    display: "flex",
+    flexWrap: "wrap",
+    flex: "1 0",
+    alignItems: "center",
+    minWidth: "0",
+});
 
-const Item = styled.div`
-    display: grid;
-    margin: 2px 2px;
-    padding: 2px;
-    background: #6864dd;
-    border-radius: 4px ;
-    padding-right: 6px;
-    padding-left: 6px;
-`;
+const Item = styled.div({
+    display: "grid",
+    margin: "2px 2px",
+    padding: "2px",
+    background: "#6864dd",
+    borderRadius: "4px",
+    paddingRight: "6px",
+    paddingLeft: "6px",
+});
 
-const TextInput = styled.input`
-  flex: 1 0;
-  min-width: 50px;
-  min-height: 25px;
-  font-size: inherit;
-  background-color: transparent;
-  padding-left: 5px;
-  border:0;
-  &:focus {
-    outline: none;
-  }
-`;
+const TextInput = styled.input({
+    flex: "1 0",
+    minWidth: "50px",
+    minHeight: "25px",
+    fontSize: "inherit",
+    backgroundColor: "transparent",
+    paddingLeft: "5px",
+    border: 0,
+    "&:focus": {
+        outline: "none",
+    }
+});
 
-const Icon = styled.div`
-  flex: 0 0;
-  cursor: pointer;
-  margin-right:5px;
-  display: ${(props) => props?.display};
-`;
+const Icon = styled.div({
+    flex: "0 0",
+    cursor: "pointer",
+    marginRight: "5px",
+    display: (props) => props?.display,
+});
 
 export const MultiValueAddressInput = (props) => {
     const [inputValue, setInputValue] = useState('');

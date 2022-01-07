@@ -12,17 +12,25 @@ import Login from './sections/login';
 import { Web3Context } from '../../contexts/Web3Context';
 import styled, { useTheme } from 'styled-components';
 
-const ScrollButton = styled.button`
-    border-radius: 100px;
-    color: black;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    height: 50px;
-    width: 50px;
-    background-color: transparent;
-    border: none;
-`;
+const ScrollButton = styled.button({
+    borderRadius: "100px",
+    color: "black",
+    cursor: "pointer",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "50px",
+    width: "50px",
+    backgroundColor: "transparent",
+    border: "none"
+});
+
+const ButtonShell = styled(Flex)({
+    backgroundColor: (props) => props.theme.colors.secondary,
+    boxShadow: (props) => `inset 9.91px 9.91px 15px ${props.theme.colors.secondary}, inset -9.91px -9.91px 15px ${props.theme.colors.accent}`,
+    padding: "5px",
+    borderRadius: "100%",
+    marginBottom: "10px"
+});
 
 function App({ setColorMode, colorMode }) {
 
@@ -83,28 +91,36 @@ function App({ setColorMode, colorMode }) {
                             <Settings setColorMode={setColorMode} colorMode={colorMode} />
                         </TabPanel>
                     </Flex>
-                    <Flex width="70px" backgroundColor={theme.colors.primary} display="flex" paddingTop="10px" borderTopRightRadius="5px" borderBottomRightRadius="5px" justifyContent="space-between" flexDirection="column" alignItems="center" paddingBottom="10px">
+                    <Flex width="70px" backgroundColor={theme.colors.secondary} display="flex" paddingTop="10px" borderTopRightRadius="5px" borderBottomRightRadius="5px" justifyContent="space-between" flexDirection="column" alignItems="center" paddingBottom="10px">
                         <Flex>
                             <TabList>
-                                <Tab>
-                                    <NeuIconButton isSelected={tabIndex === 0}>
-                                        <GlobeIcon height="20px" width="20px" />
-                                    </NeuIconButton>
+                                <Tab style={{ marginBottom: "10px" }}>
+                                    <ButtonShell>
+                                        <NeuIconButton isSelected={tabIndex === 0}>
+                                            <GlobeIcon height="20px" width="20px" />
+                                        </NeuIconButton>
+                                    </ButtonShell>
                                 </Tab>
-                                <Tab>
-                                    <NeuIconButton isSelected={tabIndex === 1}>
-                                        <PersonalIcon height="20px" width="20px" />
-                                    </NeuIconButton>
+                                <Tab style={{ marginBottom: "10px" }}>
+                                    <ButtonShell>
+                                        <NeuIconButton isSelected={tabIndex === 1}>
+                                            <PersonalIcon height="20px" width="20px" />
+                                        </NeuIconButton>
+                                    </ButtonShell>
                                 </Tab>
-                                <Tab>
-                                    <NeuIconButton isSelected={tabIndex === 2}>
-                                        {signerAddress === "" ? <LoginIcon height="20px" width="20px" /> : <ProfileIcon height="20px" width="20px" />}
-                                    </NeuIconButton>
+                                <Tab style={{ marginBottom: "10px" }}>
+                                    <ButtonShell>
+                                        <NeuIconButton isSelected={tabIndex === 2}>
+                                            {signerAddress === "" ? <LoginIcon height="20px" width="20px" /> : <ProfileIcon height="20px" width="20px" />}
+                                        </NeuIconButton>
+                                    </ButtonShell>
                                 </Tab>
-                                <Tab>
-                                    <NeuIconButton isSelected={tabIndex === 3}>
-                                        <SettingsIcon height="20px" width="20px" />
-                                    </NeuIconButton>
+                                <Tab style={{ marginBottom: "10px" }}>
+                                    <ButtonShell>
+                                        <NeuIconButton isSelected={tabIndex === 3}>
+                                            <SettingsIcon height="20px" width="20px" />
+                                        </NeuIconButton>
+                                    </ButtonShell>
                                 </Tab>
                             </TabList>
                         </Flex>

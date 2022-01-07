@@ -5,12 +5,12 @@ import styled from 'styled-components';
 import MessagesRenderer from './MessagesRenderer';
 import { Web3Context } from '../contexts/Web3Context';
 
-const MessageBox = styled.input`
-    width: 100%;
-    margin: 4px;
-    border-radius: 10px;
-    border: none;
-`;
+const MessageBox = styled.input({
+    width: "100%",
+    margin: "4px",
+    borderRadius: "10px",
+    border: "none",
+});
 
 function ThreadView(props) {
 

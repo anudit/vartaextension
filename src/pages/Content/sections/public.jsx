@@ -1,68 +1,9 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
-import styled from 'styled-components';
-import { Flex, NeuButton, NeuIconButton } from '../../../components/Base';
+import { Flex, NeuButton, NeuIconButton, NeuInput } from '../../../components/Base';
 import { MenuIcon, SendIcon } from '../../../components/Icons';
 import { Web3Context } from '../../../contexts/Web3Context';
 import TabShell from '../../../components/TabShell';
 import MessagesRenderer from '../../../components/MessagesRenderer';
-
-const MessageAuthor = styled.p`
-  font-size: 1em;
-  padding-bottom: 0px;
-  padding-top: 0px;
-  margin-bottom: 0px;
-  margin-top: 0px;
-  text-align: ${props => props.align ? props.align : "left"};
-`;
-
-const MessageText = styled.p`
-  font-size: 1.2em;
-  font-weight: 600;
-  padding-bottom: 0px;
-  padding-top: 0px;
-  margin-bottom: 0px;
-  margin-top: 0px;
-  text-align: ${props => props.align ? props.align : "left"};
-`;
-
-const Bubble = styled(Flex)`
-  border-radius: 10px;
-  width: 70%;
-  word-break: break-word;
-  margin-bottom:10px;
-  padding: 8px;
-  background-color: ${props => props.type === 0 ? "#ffffff70" : "#4c4cff3b"};
-`;
-
-const MessageRow = styled(Flex)`
-  width: 96%;
-  display:flex;
-  margin-right:5px;
-  margin-left:5px;
-  flex-direction: ${props => props.type === 0 ? "row" : "row-reverse"};
-`;
-
-const MessageBox = styled.input`
-    width: 100%;
-    margin: 4px;
-    border-radius: 5px;
-    border: none;
-    height: 40px;
-    color: text;
-`;
-
-const LoginButton = styled.button`
-    min-width:100%;
-    height: 50px !important;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    background: #ffffff70;
-    border-bottom-left-radius: 20px;
-    border:none;
-    padding:8px;
-`;
-
 
 function PublicTab({ setTabIndex }) {
 
@@ -155,7 +96,7 @@ function PublicTab({ setTabIndex }) {
                             <NeuIconButton>
                                 <MenuIcon width="30px" height="30px" />
                             </NeuIconButton>
-                            <MessageBox type="text" ref={newMessageRef} />
+                            <NeuInput margin="4px" height="40px" type="text" ref={newMessageRef} />
                             <NeuIconButton onClick={sendMessage}>
                                 <SendIcon width="15px" height="15px" />
                             </NeuIconButton>

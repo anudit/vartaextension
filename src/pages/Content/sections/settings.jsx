@@ -4,14 +4,6 @@ import { MoonIcon, SunIcon } from '../../../components/Icons';
 import Toggle from 'react-toggle';
 import TabShell from '../../../components/TabShell';
 
-function Row({ children }) {
-    return (
-        <Flex flexDirection="row" width="100%" justifyContent="space-between" alignItems="center" px={2}>
-            {children}
-        </Flex>
-    )
-}
-
 function Settings({ setColorMode, colorMode }) {
 
     function setMode(checkboxState) {
@@ -29,7 +21,7 @@ function Settings({ setColorMode, colorMode }) {
                 <br />
                 <Text fontWeight="900" m={0}>Settings</Text>
                 <br />
-                <Row>
+                <Flex flexDirection="row" justifyContent="space-between" alignItems="center" px={2}>
                     <Text fontWeight="500">Light Theme</Text>
                     <Toggle
                         id="darkModeOn"
@@ -40,9 +32,10 @@ function Settings({ setColorMode, colorMode }) {
                             unchecked: <MoonIcon fill="white" width="11px" height="14px" />,
                         }}
                     />
-                </Row>
+                </Flex>
+                <br />
                 <Flex flexDirection="row" width="100%" justifyContent="center" alignItems="center" px={2}>
-                    <NeuButton px="5px" py="10px" variant="danger" onClick={() => {
+                    <NeuButton px="15px" py="10px" variant="danger" onClick={() => {
                         localStorage.removeItem("walletconnect");
                     }}>
                         Purge Walletconnect Session

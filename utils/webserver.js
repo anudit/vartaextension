@@ -29,7 +29,7 @@ delete config.chromeExtensionBoilerplate;
 
 var compiler = webpack(config);
 
-var server = new WebpackDevServer(compiler, {
+var server = new WebpackDevServer({
   https: false,
   hot: true,
   port: env.PORT,
@@ -39,10 +39,14 @@ var server = new WebpackDevServer(compiler, {
   devMiddleware: {
     writeToDisk: true
   }
-});
+}, compiler);
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept();
 }
 
-server.listen(env.PORT);
+const runServer = async () => {
+  await server.start(env.PORT);;
+};
+
+runServer();
