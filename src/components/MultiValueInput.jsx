@@ -10,10 +10,9 @@ const Container = styled.div({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "3px",
-    borderRadius: "5px",
-    backgroundColor: "white",
-    marginTop: "2px",
+    borderRadius: "100px",
+    backgroundColor: (props) => props.theme.colors.primary,
+    boxShadow: "inset 2px -10px 13px rgb(0 0 0 / 15%), inset 0px 12px 45px rgb(0 0 0 / 21%)",
     borderColor: (props) => props.isError ? 'red' : '',
 });
 
@@ -23,28 +22,40 @@ const InputContainer = styled.div({
     flex: "1 0",
     alignItems: "center",
     minWidth: "0",
+    minHeight: "40px",
 });
 
 const Item = styled.div({
     display: "grid",
     margin: "2px 2px",
     padding: "2px",
-    background: "#6864dd",
+    background: (props) => props.theme.colors.accent,
     borderRadius: "4px",
     paddingRight: "6px",
     paddingLeft: "6px",
 });
 
 const TextInput = styled.input({
-    flex: "1 0",
-    minWidth: "50px",
-    minHeight: "25px",
-    fontSize: "inherit",
+    // flex: "1 0",
+    // minWidth: "50px",
+    // minHeight: "25px",
+    // fontSize: "inherit",
     backgroundColor: "transparent",
-    paddingLeft: "5px",
-    border: 0,
-    "&:focus": {
-        outline: "none",
+    // paddingLeft: "5px",
+    // border: 0,
+    // "&:focus": {
+    //     outline: "none",
+    // }
+    color: (props) => props.theme.colors.text,
+    // backgroundColor: (props) => props.theme.colors.primary,
+    // boxShadow: "inset 2px -10px 13px rgb(0 0 0 / 15%), inset 0px 12px 45px rgb(0 0 0 / 21%)",
+    width: "100%",
+    borderRadius: "100px",
+    border: "none",
+    paddingLeft: "10px",
+    paddingRight: "10px",
+    "&:active": {
+        border: "none",
     }
 });
 
@@ -96,7 +107,7 @@ export const MultiValueAddressInput = (props) => {
                         }
 
                     }
-                    else if (value.slice(value.length - 4, value.length) === '.eth') { // .eth
+                    else if (value.endsWith('.eth') === true) {
                         let resolvedAddress = await ensToAddress(value);
                         if (Boolean(resolvedAddress) === true) {
                             setValues([...values, {
@@ -128,6 +139,7 @@ export const MultiValueAddressInput = (props) => {
                     onChange={(event) => {
                         setInputValue(event.target.value);
                     }}
+                    placeholder={props?.placeholder}
                 />
             </InputContainer>
             <Icon
@@ -181,6 +193,7 @@ export const MultiValueInput = (props) => {
                     onChange={(event) => {
                         setInputValue(event.target.value);
                     }}
+                    placeholder={props?.placeholder}
                 />
             </InputContainer>
             <Icon

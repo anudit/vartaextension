@@ -1,21 +1,36 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
-import { Flex, NeuButton, NeuIconButton, NeuInput } from '../../../components/Base';
+import { Flex, NeuButton, NeuIconButton, NeuInput, Text } from '../../../components/Base';
 import { MenuIcon, SendIcon } from '../../../components/Icons';
 import { Web3Context } from '../../../contexts/Web3Context';
 import TabShell from '../../../components/TabShell';
 import MessagesRenderer from '../../../components/MessagesRenderer';
+import { getBehaviour } from '../behaviours';
 
 function PublicTab({ setTabIndex }) {
 
     const { signerAddress, convo, getAuthToken } = useContext(Web3Context);
+
     let [comments, setComments] = useState(undefined);
+    let [customBehaviour, setCustomBehaviour] = useState(false);
     const newMessageRef = useRef(null);
 
     useEffect(async () => {
-        // let url = document.location.origin + document.location.pathname;
-        // let threadId = "public";
-        let url = 'https://theconvo.space/';
-        let threadId = "KIGZUnR4RzXDFheXoOwo";
+
+        // get page details.
+        let url = window.location.origin + window.location.pathname;
+        let threadId = "public";
+
+        // check if the extension should adapt to a page.
+        let customBehaviourChecker = getBehaviour(url);
+        console.log(customBehaviourChecker);
+        setCustomBehaviour(customBehaviourChecker);
+        if (Boolean(customBehaviourChecker) === true) {
+            if (customBehaviourChecker.kind === 'nft') {
+                threadId = customBehaviourChecker.match[1] + customBehaviourChecker.match[2] + customBehaviourChecker.behaviour.chainId;
+            }
+        }
+
+        // get comments.
         let snapshot = await convo.comments.query({
             url: encodeURIComponent(url),
             threadId,
@@ -23,11 +38,6 @@ function PublicTab({ setTabIndex }) {
         });
         setComments(snapshot.reverse());
 
-        let commentsBox = document.getElementById('commentsBox');
-        if (Boolean(commentsBox) === true) {
-            const scroll = commentsBox.scrollHeight - commentsBox.clientHeight;
-            commentsBox.scrollTo(0, scroll);
-        }
     }, []);
 
     async function scrollDown() {
@@ -47,8 +57,10 @@ function PublicTab({ setTabIndex }) {
     async function sendMessage() {
 
         let token = await getAuthToken();
-        let url = 'https://theconvo.space/';
-        let threadId = "KIGZUnR4RzXDFheXoOwo";
+        // let url = 'https://theconvo.space/';
+        // let threadId = "KIGZUnR4RzXDFheXoOwo";
+        let url = window.location.origin + window.location.pathname;
+        let threadId = "public";
 
         console.log({
             signerAddress,
@@ -87,7 +99,10 @@ function PublicTab({ setTabIndex }) {
     else {
         return (
             <TabShell>
-                <Flex height="450px" display="flex" flexDirection="column" overflow="scroll" className="publicTab" id="commentsBox">
+                <Flex height="50px" display="flex" flexDirection="column" overflow="hidden" py="5px">
+                    <Text>{window.location.host.replace('www.', '')}</Text>
+                </Flex>
+                <Flex height="400px" display="flex" flexDirection="column" overflow="scroll" className="publicTab" id="commentsBox">
                     <MessagesRenderer comments={comments} />
                 </Flex>
                 {

@@ -78,13 +78,13 @@ const NeuInput = styled.input({
   height: props => Boolean(props?.height) === true ? props.height : "40px",
   margin: props => Boolean(props?.margin) === true ? props.margin : "0px",
   color: (props) => props.theme.colors.text,
-  backgroundColor: "#353636",
+  backgroundColor: (props) => props.theme.colors.primary,
   boxShadow: "inset 2px -10px 13px rgb(0 0 0 / 15%), inset 0px 12px 45px rgb(0 0 0 / 21%)",
   width: "100%",
   borderRadius: "100px",
   border: "none",
   paddingLeft: "10px",
-  paddingReft: "10px",
+  paddingRight: "10px",
   "&:active": {
     border: "none",
   }

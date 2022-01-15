@@ -74,7 +74,7 @@ function Login() {
                 />
                 <br />
                 <Text>Welcome, <b>{prettyName === "" ? truncateAddress(signerAddress) : prettyName}</b></Text>
-                <Text>TrustScore: {verified}</Text>
+                <Text>TrustScore: {parseFloat(verified).toFixed(2)}</Text>
                 <br /><br />
                 <NeuButton variant="danger" onClick={disconnectWallet} minH="40px" p="10px 20px 10px 20px" >
                     Disconnect Wallet

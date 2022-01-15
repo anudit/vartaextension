@@ -160,7 +160,7 @@ export const Web3ContextProvider = ({ children }) => {
                 // if there was a previous session, try and validate that first.
                 if (Boolean(manualSessionDetails?.sessionCookie) === true) {
 
-                    let tokenRes = convo.auth.validate(accounts[0], manualSessionDetails.sessionCookie);
+                    let tokenRes = await convo.auth.validate(accounts[0], manualSessionDetails.sessionCookie);
                     console.log('tokenRes', tokenRes);
                     // if previous session is invalid then request a new auth token.
                     if (tokenRes['success'] === false) {
@@ -227,7 +227,7 @@ export const Web3ContextProvider = ({ children }) => {
         if (tokenRes['success'] === true) {
             return sessionCookie;
         }
-        else {
+        else if (tokenRes['success'] === false) {
             try {
                 let tokenUpdateRes = await updateAuthToken(authAdd, connectedChain, provider);
                 if (tokenUpdateRes) {

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Flex } from './Base';
+import { Flex, Text } from './Base';
 import styled from 'styled-components';
 import timeAgo, { truncateAddress } from '../utils/stringUtils';
 import { Web3Context } from '../contexts/Web3Context';
@@ -48,7 +48,10 @@ function MessagesRenderer({ comments }) {
     const { signerAddress } = useContext(Web3Context);
 
     if (Boolean(comments) === false || Boolean(comments.map) === false) {
-        return (<></>)
+        return (<div className="loader"></div>)
+    }
+    else if (comments && comments.length === 0) {
+        return (<Text>Be the first one to comment.</Text>)
     }
     else {
         return comments.map(comment => {

@@ -7,6 +7,7 @@ import TabShell from '../../../components/TabShell';
 import { Web3Context } from '../../../contexts/Web3Context';
 import { MultiValueInput, MultiValueAddressInput } from '../../../components/MultiValueInput';
 import Toggle from 'react-toggle';
+import { useTheme } from 'styled-components'
 
 let ButtonStyled = styled.button({
     borderRadius: "10px",
@@ -27,6 +28,7 @@ let ButtonStyled = styled.button({
 
 function Personal() {
 
+    const theme = useTheme();
     const { signerAddress, convo, getAuthToken } = useContext(Web3Context);
     let [threads, setThreads] = useState(null);
     const [activeScreen, setActiveScreen] = useState('home');
@@ -138,7 +140,7 @@ function Personal() {
                                         marginBottom="5px"
                                         marginRight="5px"
                                         marginLeft="5px"
-                                        backgroundColor="#ffffff42"
+                                        backgroundColor={theme.colors.secondary}
                                         borderRadius="10px"
                                         cursor="pointer"
                                         onClick={() => {
@@ -174,32 +176,27 @@ function Personal() {
             <TabShell>
 
                 <Flex flexDirection="column" margin="10px">
-                    <Flex flexDirection="row" textAlign="center" marginBottom="4px" justifyContent="space-between">
+                    <Flex flexDirection="row" textAlign="center" marginBottom="10px" justifyContent="space-between">
                         <Text onClick={() => { setActiveScreen('home') }} style={{ margin: "0px" }}>Back</Text>
                         <Text style={{ margin: "0px" }}>Create a New Thread</Text>
                         <Text style={{ margin: "0px", visibility: "hidden" }}>Nodisp</Text>
                     </Flex>
                     <br />
-                    <Flex flexDirection="column" textAlign="left" marginBottom="4px">
-                        <Text style={{ margin: "0px" }}>Title</Text>
-                        <NeuInput defaultValue="Title" ref={inputTitleRef} />
+                    <Flex flexDirection="column" textAlign="left" marginBottom="10px">
+                        <NeuInput defaultValue="Title" ref={inputTitleRef} placeholder='Title' />
                     </Flex>
-                    <Flex flexDirection="column" textAlign="left" marginBottom="4px">
-                        <Text style={{ margin: "0px" }}>Description</Text>
-                        <NeuInput defaultValue="Desc" ref={inputDescriptionRef} />
+                    <Flex flexDirection="column" textAlign="left" marginBottom="10px">
+                        <NeuInput defaultValue="Desc" ref={inputDescriptionRef} placeholder='Description' />
                     </Flex>
-                    <Flex flexDirection="column" textAlign="left" marginBottom="4px">
-                        <Text style={{ margin: "0px" }}>Members</Text>
-                        <MultiValueAddressInput inputRef={inputMembersRef} />
+                    <Flex flexDirection="column" textAlign="left" marginBottom="10px">
+                        <MultiValueAddressInput inputRef={inputMembersRef} placeholder='Add Members' />
                     </Flex>
-                    <Flex flexDirection="column" textAlign="left" marginBottom="4px">
-                        <Text style={{ margin: "0px" }}>Moderators</Text>
-                        <MultiValueAddressInput inputRef={inputModeratorsRef} />
+                    <Flex flexDirection="column" textAlign="left" marginBottom="10px">
+                        <MultiValueAddressInput inputRef={inputModeratorsRef} placeholder='Add Moderators' />
                         {/* <Input defaultValue="0x707aC3937A9B31C225D8C240F5917Be97cab9F20" /> */}
                     </Flex>
-                    <Flex flexDirection="column" textAlign="left" marginBottom="4px">
-                        <Text style={{ margin: "0px" }}>Keywords</Text>
-                        <MultiValueInput inputRef={inputKeywordsRef} />
+                    <Flex flexDirection="column" textAlign="left" marginBottom="10px">
+                        <MultiValueInput inputRef={inputKeywordsRef} placeholder='Add Keywords' />
                     </Flex>
                     <br />
                     <Flex flexDirection="row" alignItems="center">
