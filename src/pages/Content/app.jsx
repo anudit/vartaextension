@@ -21,7 +21,8 @@ const ScrollButton = styled.button({
     height: "50px",
     width: "50px",
     backgroundColor: "transparent",
-    border: "none"
+    border: "none",
+    display: "flex"
 });
 
 const ButtonShell = styled(Flex)({

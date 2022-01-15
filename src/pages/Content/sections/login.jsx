@@ -13,9 +13,9 @@ let WalletItem = styled(Flex)({
     width: "70%",
     marginBottom: "10px",
     padding: "8px",
-    backgroundImage: props => Boolean(props.backgroundImage) === true ? props.backgroundImage : "";
+    backgroundImage: props => Boolean(props.backgroundImage) === true ? props.backgroundImage : "",
     flexDirection: "row",
-    minHeight: props => Boolean(props.minH) === true ? props.minH : "50px";
+    minHeight: props => Boolean(props.minH) === true ? props.minH : "50px",
     fontWeight: 700,
     display: "flex",
     justifyContent: "space-evenly",

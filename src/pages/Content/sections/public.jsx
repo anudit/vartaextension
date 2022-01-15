@@ -76,7 +76,7 @@ function PublicTab({ setTabIndex }) {
         return (
             <TabShell>
                 <Flex width="100%" height="450px" display="flex" justifyContent="center" alignContent="center">
-                    <div className="loader"></div>
+                    <div className="loader" ></div>
                 </Flex>
             </TabShell>
         );

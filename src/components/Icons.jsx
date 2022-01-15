@@ -76,7 +76,7 @@ function LoginIcon({ width, height }) {
 function DownArrowIcon({ width, height }) {
     const theme = useTheme();
     return (
-        <svg height={height} width={width} xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd">
+        <svg height={height} width={width} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd">
             <path fill={theme.colors.text} d="M23.245 4l-11.245 14.374-11.219-14.374-.781.619 12 15.381 12-15.391-.755-.609z" />
         </svg>
     )

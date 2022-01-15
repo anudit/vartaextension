@@ -53,7 +53,6 @@ const Button = styled.button`
 `;
 
 const Input = styled.input`
-    ${space}
     width: ${props => Boolean(props.width) === true ? props.width : "100%"};
     padding: 3px;
     margin-top: 4px;
@@ -76,12 +75,19 @@ const IconButton = styled.button({
 });
 
 const NeuInput = styled.input({
+  height: props => Boolean(props?.height) === true ? props.height : "40px",
+  margin: props => Boolean(props?.margin) === true ? props.margin : "0px",
   color: (props) => props.theme.colors.text,
   backgroundColor: "#353636",
   boxShadow: "inset 2px -10px 13px rgb(0 0 0 / 15%), inset 0px 12px 45px rgb(0 0 0 / 21%)",
   width: "100%",
-  borderRadius: "5px",
-  border: "none"
+  borderRadius: "100px",
+  border: "none",
+  paddingLeft: "10px",
+  paddingReft: "10px",
+  "&:active": {
+    border: "none",
+  }
 })
 
 const NeuIconButton = styled(IconButton)(

@@ -97,7 +97,7 @@ function Personal() {
 
         return (
             <TabShell>
-                <Flex flexDirection="row" marginTop="5px" marginBottom="5px">
+                <Flex flexDirection="row" marginTop="5px" marginBottom="5px" alignItems="center">
                     <br />
                     <NeuIconButton onClick={() => { setActiveScreen('create') }} size="sm">
                         <AddIcon width="15px" height="15px" />

@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import ConvoApp from './app';
 import { ThemeProvider } from 'styled-components'
 import { Web3ContextProvider } from '../../contexts/Web3Context';
+import updateUI from './uiadditions';
 
 const baseTheme = {
     initialColorModeName: 'dark',
@@ -57,6 +58,10 @@ function App() {
 let appEle = document.createElement("div");
 appEle.id = "#app-convo"
 appEle.classList.add('app-convo')
+
 render(<App />, window.document.body.appendChild(appEle));
+setTimeout(() => {
+    updateUI();
+}, 3000);
 
 if (module.hot) module.hot.accept();
