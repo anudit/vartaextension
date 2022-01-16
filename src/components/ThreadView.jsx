@@ -15,8 +15,9 @@ const MessageBox = styled.input({
 function ThreadView(props) {
 
     let [comments, setComments] = useState(null);
+    let [sendingMessage, setSendingMessage] = useState(false);
     const newMessageRef = useRef(null);
-    const { convo } = useContext(Web3Context);
+    const { convo, signerAddress, getAuthToken } = useContext(Web3Context);
 
     useEffect(() => {
         convo.comments.query({
@@ -40,7 +41,31 @@ function ThreadView(props) {
     }
 
     async function createNewMessage() {
-
+        setSendingMessage(true);
+        let token = await getAuthToken();
+        let url = window.location.origin + window.location.pathname;
+        console.log({
+            signerAddress,
+            token,
+            comment: encodeURIComponent(newMessageRef.current.value),
+            threadId: props.screenData._id,
+            url
+        })
+        let resp = await convo.comments.create(
+            signerAddress,
+            token,
+            encodeURIComponent(newMessageRef.current.value),
+            props.screenData._id,
+            url
+        );
+        console.log(resp);
+        setComments((currentComments) => {
+            let updatedComments = currentComments.concat([resp]);
+            console.log(updatedComments);
+            newMessageRef.current.value = "";
+            return updatedComments;
+        })
+        setSendingMessage(false);
     }
 
     return (
@@ -57,7 +82,13 @@ function ThreadView(props) {
                 </NeuIconButton>
                 <NeuInput margin="4px" height="40px" type="text" ref={newMessageRef} />
                 <NeuIconButton onClick={createNewMessage}>
-                    <SendIcon width="15px" height="15px" />
+                    {
+                        sendingMessage === false ? (
+                            <SendIcon width="15px" height="15px" />
+                        ) : (
+                            <div className="loader"></div>
+                        )
+                    }
                 </NeuIconButton>
             </Flex>
         </Flex>

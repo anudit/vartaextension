@@ -68,7 +68,7 @@ const Icon = styled.div({
 
 export const MultiValueAddressInput = (props) => {
     const [inputValue, setInputValue] = useState('');
-    const [values, setValues] = useState([]);
+    const { values, setValues } = props;
 
     const isError = useMemo(() => {
         return values.length > new Set(values).size;
@@ -158,7 +158,7 @@ export const MultiValueAddressInput = (props) => {
 
 export const MultiValueInput = (props) => {
     const [inputValue, setInputValue] = useState('');
-    const [values, setValues] = useState([]);
+    const { values, setValues } = props;
 
     const isError = useMemo(() => {
         return values.length > new Set(values).size;

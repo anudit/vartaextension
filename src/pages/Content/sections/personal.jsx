@@ -40,9 +40,12 @@ function Personal() {
     const searchInput = useRef();
     const inputTitleRef = useRef();
     const inputDescriptionRef = useRef();
-    const inputMembersRef = useRef();
-    const inputModeratorsRef = useRef();
-    const inputKeywordsRef = useRef();
+    const [inputMembers, setInputMembers] = useState([]);
+    const [inputMods, setInputMods] = useState([]);
+    const [inputKeywords, setInputKeywords] = useState([]);
+    // const inputMembersRef = useRef();
+    // const inputModeratorsRef = useRef();
+    // const inputKeywordsRef = useRef();
 
     useEffect(() => {
         refreshThreads();
@@ -66,9 +69,9 @@ function Personal() {
             token,
             title: inputTitleRef.current.value,
             description: inputDescriptionRef.current.value,
-            members: inputMembersRef.current.value.split(',').map((s) => { return s.trim() }),
-            moderators: inputModeratorsRef.current.value.split(',').map((s) => { return s.trim() }),
-            keywords: inputKeywordsRef.current.value.split(',').map((s) => { return s.trim() }),
+            members: inputMembers.map((e) => e.raw),
+            moderators: inputMods.map((e) => e.raw),
+            keywords: inputKeywords,
             isReadPublic: isReadPublic,
             isWritePublic: isWritePublic,
         })
@@ -80,9 +83,9 @@ function Personal() {
             url,
             isReadPublic,
             isWritePublic,
-            inputMembersRef.current.value.split(',').map((s) => { return s.trim() }),
-            inputModeratorsRef.current.value.split(',').map((s) => { return s.trim() }),
-            inputKeywordsRef.current.value.split(',').map((s) => { return s.trim() }),
+            inputMembers.map((e) => e.raw),
+            inputMods.map((e) => e.raw),
+            inputKeywords,
         );
         console.log(resp);
     }
@@ -189,14 +192,14 @@ function Personal() {
                         <NeuInput defaultValue="Desc" ref={inputDescriptionRef} placeholder='Description' />
                     </Flex>
                     <Flex flexDirection="column" textAlign="left" marginBottom="10px">
-                        <MultiValueAddressInput inputRef={inputMembersRef} placeholder='Add Members' />
+                        <MultiValueAddressInput values={inputMembers} setValues={setInputMembers} placeholder='Add Members' />
                     </Flex>
                     <Flex flexDirection="column" textAlign="left" marginBottom="10px">
-                        <MultiValueAddressInput inputRef={inputModeratorsRef} placeholder='Add Moderators' />
+                        <MultiValueAddressInput values={inputMods} setValues={setInputMods} placeholder='Add Moderators' />
                         {/* <Input defaultValue="0x707aC3937A9B31C225D8C240F5917Be97cab9F20" /> */}
                     </Flex>
                     <Flex flexDirection="column" textAlign="left" marginBottom="10px">
-                        <MultiValueInput inputRef={inputKeywordsRef} placeholder='Add Keywords' />
+                        <MultiValueInput values={inputKeywords} setValues={setInputKeywords} placeholder='Add Keywords' />
                     </Flex>
                     <br />
                     <Flex flexDirection="row" alignItems="center">

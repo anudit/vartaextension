@@ -16,6 +16,41 @@ function getBehaviour(url) {
                 kind: 'nft',
                 chainId: 137,
             }
+        },
+        rarible: {
+            regex: /https:\/\/rarible\.com\/token\/(0x[a-fA-F0-9]{40}):([A-Za-z0-9_]+$)/i,
+            behaviour: {
+                kind: 'nft',
+                chainId: 1,
+            }
+        },
+        asyncart: {
+            regex: /https:\/\/async\.art\/art\/master\/(0x[a-fA-F0-9]{40})-([A-Za-z0-9_]+$)/i,
+            behaviour: {
+                kind: 'nft',
+                chainId: 1,
+            }
+        },
+        showtime: {
+            regex: /https:\/\/showtime\.io\/t\/ethereum\/(0x[a-fA-F0-9]{40})\/([A-Za-z0-9_]+$)/i,
+            behaviour: {
+                kind: 'nft',
+                chainId: 1,
+            }
+        },
+        showtimeMatic: {
+            regex: /https:\/\/showtime\.io\/t\/polygon\/(0x[a-fA-F0-9]{40})\/([A-Za-z0-9_]+$)/i,
+            behaviour: {
+                kind: 'nft',
+                chainId: 137,
+            }
+        },
+        zora: {
+            regex: /https:\/\/zora\.co\/collections\/(0x[a-fA-F0-9]{40})\/([A-Za-z0-9_]+$)/i,
+            behaviour: {
+                kind: 'nft',
+                chainId: 1,
+            }
         }
     }
 
