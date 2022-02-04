@@ -3,8 +3,7 @@ import { ethers } from "ethers";
 import { Convo } from '@theconvospace/sdk';
 import Torus from "@toruslabs/torus-embed";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { initializeProvider } from '@metamask/providers';
-import LocalMessageDuplexStream from 'post-message-stream';
+import createMetaMaskProvider from "metamask-extension-provider";
 import log from 'loglevel';
 
 log.setDefaultLevel('debug');
@@ -15,19 +14,6 @@ log.setDefaultLevel('debug');
 export const Web3Context = React.createContext(undefined);
 
 export const Web3ContextProvider = ({ children }) => {
-
-    const metamaskStream = new LocalMessageDuplexStream({
-        name: 'metamask-inpage',
-        target: 'metamask-contentscript',
-    });
-    // this will initialize the provider and set it as window.ethereum
-    let ethereumProvider = initializeProvider({
-        connectionStream: metamaskStream,
-        jsonRpcStreamName: 'metamask-provider',
-        logger: log,
-        shouldSetOnWindow: true,
-        shouldShimWeb3: true,
-    });
 
     const [provider, setProvider] = useState(undefined);
     const [connectedChain, setConnectedChain] = useState("");
@@ -131,17 +117,31 @@ export const Web3ContextProvider = ({ children }) => {
                 }
                 else if (choice === "injected") {
 
-                    console.log('ethereumProvider', ethereumProvider);
+                    const provider = createMetaMaskProvider();
+
+                    if (provider) {
+                        console.log('MetaMask provider detected.', provider)
+
+                        provider.on('error', (error) => {
+                            if (error && error.includes('lost connection')) {
+                                console.log('MetaMask extension not detected.')
+                            }
+                        })
+
+                        accounts = await provider.request({ method: 'eth_requestAccounts' });
+                        console.log('accounts', accounts);
+
+                        ethersProvider = new ethers.providers.Web3Provider(provider);
+                        console.log('ethersProvider', ethersProvider);
+
+                        isProviderSet = true;
 
 
-                    accounts = await ethereumProvider.request({ method: 'eth_requestAccounts' });
-                    // accounts = await window.ethereum.enable();
-                    console.log('accounts', accounts);
-                    ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
-                    console.log('ethersProvider', ethersProvider);
-                    // accounts = await ethersProvider.listAccounts();
-                    console.log('accounts', accounts);
-                    isProviderSet = true;
+                    } else {
+                        console.log('MetaMask provider not detected.')
+                    }
+
+
                 }
                 else {
                     console.log('Invalid Choice.');
