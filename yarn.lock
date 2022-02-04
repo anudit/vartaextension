@@ -1936,10 +1936,10 @@
     keccak "^3.0.2"
     randombytes "^2.1.0"
 
-"@toruslabs/torus-embed@^1.20.3":
-  version "1.20.3"
-  resolved "https://registry.yarnpkg.com/@toruslabs/torus-embed/-/torus-embed-1.20.3.tgz#5a01a189499564d56ce47390987ac4fcfd91f16a"
-  integrity sha512-uCgKNTrwRzq7RDHj4MyKVlBqwl1/QjAE/KY2jlKhvpfOS9Jz9wW+9yA3YTl9Y+OcwgDMEThenTsW++p81caS7g==
+"@toruslabs/torus-embed@^1.20.4":
+  version "1.20.4"
+  resolved "https://registry.yarnpkg.com/@toruslabs/torus-embed/-/torus-embed-1.20.4.tgz#d1ec55bd4071ab8dcd1809e63e09211fc5e6830d"
+  integrity sha512-s5mxLA2ZIY4YeadS4EQReXK1oKnJgVmdaZjJAprnDzSAIOLJnd5GRdbHgq5wNH1pBk+T5hrppv6fWBR1pXNlXw==
   dependencies:
     "@metamask/obs-store" "^7.0.0"
     "@toruslabs/fetch-node-details" "^4.0.2"
@@ -2017,10 +2017,10 @@
     "@types/filesystem" "*"
     "@types/har-format" "*"
 
-"@types/chrome@^0.0.177":
-  version "0.0.177"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.177.tgz#b9098a9b0f3714d6604289d176b2a042ddd88ee7"
-  integrity sha512-bZIZyNAJMMqIgbRsBM+nGNDPezaWZMr3p+CKz1JGj4Jn8c7SpvdUqaconpxUG5WEL1WoisBeA3sumo+WXaC9CA==
+"@types/chrome@^0.0.178":
+  version "0.0.178"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.178.tgz#fba7969208cef79ae752dc1138ff05de39f5ffde"
+  integrity sha512-U+G5YG2pH0qvLrYVJ9aT5VbPXYR3fAFyCuRBRAA14Pv7GrkFzDJuXPspgdeLYaKzGEp4rymUkuqUOuFz18LI1g==
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"

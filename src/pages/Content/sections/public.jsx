@@ -120,16 +120,20 @@ function PublicTab({ setTabIndex }) {
         return (
             <TabShell>
                 {
-                    Boolean(customBehaviourMeta) === true && Boolean(customBehaviourMeta.data.items[0].nft_data[0].external_data.description) === true ? (
+                    Boolean(customBehaviourMeta) === true ? (
                         <Flex height="130px" flexDirection="row" width="100%" display="flex" overflow="hidden" py="5px" backgroundColor={theme.colors.secondary} borderRadius="10px" alignItems="center" justifyContent="center" padding="5px" marginTop="5px">
-                            <img src={customBehaviourMeta.data.items[0].nft_data[0].external_data.image} style={{ height: "100px", width: "100px" }} />
+                            <img src={customBehaviourMeta.media[0].uri.gateway} style={{ height: "100px", width: "100px" }} />
                             <Flex flexDirection="column" textAlign="left" padding="5px">
                                 <Text fontWeight="800">
-                                    {customBehaviourMeta.data.items[0].nft_data[0].external_data.name}
+                                    {customBehaviourMeta.title}
                                 </Text>
-                                <Text fontSize="small">
-                                    {String(customBehaviourMeta.data.items[0].nft_data[0].external_data.description).slice(0, 90) + "..."}
-                                </Text>
+                                {
+                                    Boolean(customBehaviourMeta.description) === true && (
+                                        <Text fontSize="small">
+                                            {String(customBehaviourMeta.description).slice(0, 90) + "..."}
+                                        </Text>
+                                    )
+                                }
                             </Flex>
                         </Flex>
                     ) : (
@@ -138,7 +142,7 @@ function PublicTab({ setTabIndex }) {
                         </Flex>
                     )
                 }
-                <Flex height={Boolean(customBehaviourMeta) === true && Boolean(customBehaviourMeta.data.items[0].nft_data[0].external_data.description) === true ? "320px" : "400px"} display="flex" flexDirection="column" overflow="scroll" className="publicTab" id="commentsBox">
+                <Flex height={Boolean(customBehaviourMeta) === true && Boolean(customBehaviourMeta.description) === true ? "320px" : "400px"} display="flex" flexDirection="column" overflow="scroll" className="publicTab" id="commentsBox">
                     <MessagesRenderer comments={comments} />
                 </Flex>
                 {
